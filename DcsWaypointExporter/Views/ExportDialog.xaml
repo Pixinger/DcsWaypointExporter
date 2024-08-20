@@ -1,0 +1,132 @@
+﻿<Window
+    x:Class="DcsWaypointExporter.Views.ExportDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:DcsWaypointExporter.Views"
+    xmlns:customres="clr-namespace:DcsWaypointExporter.CustomResources"
+    xmlns:viewmodels="clr-namespace:DcsWaypointExporter.ViewModels"
+    mc:Ignorable="d"
+    Title="{x:Static customres:Language.Export}"
+    SizeToContent="WidthAndHeight"
+    MinWidth="300"
+    MinHeight="300"
+    MaxWidth="500"
+    MaxHeight="500"
+    d:DataContext="{d:DesignInstance {x:Type viewmodels:ExportDialog}, IsDesignTimeCreatable=false}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Styles -->
+                <ResourceDictionary>
+                    <Style
+                        x:Key="ImportantTextBlock"
+                        TargetType="TextBlock">
+                        <Setter
+                            Property="Foreground"
+                            Value="Blue" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- MAIN GRID -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="1*" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <UniformGrid
+            Columns="2"
+            Grid.Row="0">
+            <Button
+                Margin="5,5,2.5,5"
+                Padding="5"
+                IsDefault="True"
+                Content="{x:Static customres:Language.ToFile}"
+                Command="{Binding CommandSaveToFile}" />
+            <Button
+                Margin="2.5,5,5,5"
+                Padding="5"
+                Content="{x:Static customres:Language.ToClipboard}"
+                Command="{Binding CommandCopyToClipboard}" />
+        </UniformGrid>
+
+        <!-- TextBox -->
+        <TextBox
+            Grid.Row="1"
+            Margin="5"
+            TextWrapping="Wrap"
+            HorizontalScrollBarVisibility="Hidden"
+            VerticalScrollBarVisibility="Auto"
+            IsReadOnly="True"
+            Text="{Binding ExportedText, Mode=OneWay}">
+        </TextBox>
+
+        <!-- Mission Info & CLOSE Button -->
+        <Grid
+            Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Mission Info -->
+            <StackPanel
+                Margin="0,0,0,5"
+                Visibility="{Binding Mission, Converter={StaticResource NullObjectToVisibility}}"
+                Grid.Column="0">
+
+                <StackPanel
+                    Margin="5,0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Style="{StaticResource ImportantTextBlock}"
+                        Text="{x:Static customres:Language.Name_COL}" />
+                    <TextBlock
+                        Style="{StaticResource ImportantTextBlock}"
+                        Margin="5,0,0,0"
+                        Text="{Binding Mission.Name}"
+                        d:Text="MyMission" />
+                </StackPanel>
+
+                <StackPanel
+                    Margin="5,0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Style="{StaticResource ImportantTextBlock}"
+                        Text="{x:Static customres:Language.Waypoints_COL}" />
+                    <TextBlock
+                        Style="{StaticResource ImportantTextBlock}"
+                        Margin="5,0,0,0"
+                        Text="{Binding Mission.Waypoints.Count}"
+                        d:Text="10" />
+                </StackPanel>
+
+            </StackPanel>
+
+            <!-- CLOSE Button -->
+            <UniformGrid
+                Margin="0,0,5,5"
+                Grid.Column="1"
+                Columns="1">
+                <Button
+                    MinWidth="75"
+                    Content="{x:Static customres:Language.Close}"
+                    IsCancel="True"
+                    Command="{Binding CommandClose}" />
+            </UniformGrid>
+        </Grid>
+
+    </Grid>
+</Window>
