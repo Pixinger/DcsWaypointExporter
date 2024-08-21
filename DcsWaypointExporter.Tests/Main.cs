@@ -39,6 +39,7 @@ namespace DcsWaypointExporter.Tests
             var instance = serializer.DeserializeFromFile_XUnit(filename1);
             Assert.NotNull(instance);
             Assert.True(serializer.SerializeToFile_XUnit(instance, filename2));
+            Assert.True(File.Exists(filename2));
 
             // Compare Files
             #region function: static byte[] computeHash(HashAlgorithm hashAlgorithm, string filePath)
