@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solutionfolder", "_Solutio
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DcsWaypointExporter.Tests", "DcsWaypointExporter.Tests\DcsWaypointExporter.Tests.csproj", "{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DcsWaypointExporter.Tests", "DcsWaypointExporter.Tests\DcsWaypointExporter.Tests.csproj", "{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{61C7A72F-FFFB-4574-A89B-2A4B93F44BE7}"
 EndProject

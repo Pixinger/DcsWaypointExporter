@@ -43,6 +43,9 @@
         <Label
             FontSize="10"
             Content="{x:Static customres:Language.LicenseMIT}" />
+        <Label
+            FontSize="10"
+            Content="{x:Static customres:Language.License3rd}" />
 
         <!-- OK Button -->
         <Button

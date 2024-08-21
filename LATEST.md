@@ -7,6 +7,5 @@ I strongly reccomend not to download this release without knowing what's going o
 
 You have been warned!
 
-- Fix: Version
-- Mod: Increased base window size
-- Fix: Line ending in Preset-lua exports where identical.
+- Added 3rd party dependency informations
+- Added correct names for Caucasus, Kola, Nevada, Normandy (1944), Mariana Islands, Persian Gulf, South Altlantic, Sinai, Syria and The Channel. (*thx to Triscan*)
