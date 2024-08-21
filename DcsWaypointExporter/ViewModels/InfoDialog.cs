@@ -13,16 +13,12 @@ namespace DcsWaypointExporter.ViewModels
 
         public event Action<bool>? Close;
 
-        public Version Version
-        {
-            get => _version;
-            set => SetProperty(ref _version, value);
-        }
-        private Version _version = new Version();
+        public string? Version { get; }
 
 
-        public InfoDialog()
+        public InfoDialog(string? version)
         {
+            Version = version;
         }
 
 

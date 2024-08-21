@@ -2,7 +2,7 @@
   <!-- DO MODIFY: -->
   <PropertyGroup>
     <PixVersionSuffix>1.0.0</PixVersionSuffix>
-    <PixVersionExtension>-alpha1</PixVersionExtension>
+    <PixVersionExtension>-alpha2</PixVersionExtension>
     <!--PixVersionExtension: could be "-alpha1"-->
     <PixProduct>DCS Waypoint Exporter</PixProduct>
     <!-- Bsp. <DefineConstants>MY_CONSTANT</DefineConstants> -->
@@ -10,9 +10,10 @@
 
   <!-- Automatic build of assembly information: DO NOT MODIFY! -->
   <PropertyGroup>
+    <PixBuildNumberExtension>build($([System.DateTime]::Now.ToString("yy"))$([System.DateTime]::Now.DayOfYear.ToString("0"))-$([System.DateTime]::Now.TimeOfDay.TotalSeconds.ToString("0")))</PixBuildNumberExtension>
     <AssemblyVersion>$(PixVersionSuffix)</AssemblyVersion>
     <Version>$(PixVersionSuffix)$(PixVersionExtension)</Version>
-    <SourceRevisionId>abcd</SourceRevisionId>
+    <SourceRevisionId>$(PixBuildNumberExtension)</SourceRevisionId>
     <Product>$(PixProduct)</Product>
     <Company>pixinger at github.com</Company>
     <Authors>pixinger at github.com</Authors>
