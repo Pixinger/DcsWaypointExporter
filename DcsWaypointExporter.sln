@@ -16,6 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solutionfolder", "_Solutio
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DcsWaypointExporter.Tests", "DcsWaypointExporter.Tests\DcsWaypointExporter.Tests.csproj", "{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{61C7A72F-FFFB-4574-A89B-2A4B93F44BE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{CD5AEC26-CE85-4D7D-B1F5-4AE4B17F10A3}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +35,16 @@ Global
 		{D3F6B2B7-9095-42F9-8778-DC03E046EFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3F6B2B7-9095-42F9-8778-DC03E046EFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3F6B2B7-9095-42F9-8778-DC03E046EFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C8EE5A3-19DE-4E9A-AE9C-034D0E88B525}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD5AEC26-CE85-4D7D-B1F5-4AE4B17F10A3} = {61C7A72F-FFFB-4574-A89B-2A4B93F44BE7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B0C74D73-12BC-490E-978D-7E5F3016EBD2}
