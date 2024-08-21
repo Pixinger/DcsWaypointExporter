@@ -153,6 +153,14 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="License3rd" xml:space="preserve">
+    <value>3rd party dependencies:
+https://github.com/CommunityToolkit/dotnet (MIT)
+https://github.com/coverlet-coverage/coverlet (MIT)
+https://nlog-project.org/ (BSD3 clause)
+XUnit (Apache 2.0)</value>
+    <comment>@Invariant</comment>
+  </data>
   <data name="LicenseMIT" xml:space="preserve">
     <value>MIT License
 
@@ -191,6 +199,9 @@ SOFTWARE.</value>
   </data>
   <data name="Map_Kola" xml:space="preserve">
     <value>Kola</value>
+  </data>
+  <data name="Map_MarianaIslands" xml:space="preserve">
+    <value>Mariana Islands</value>
   </data>
   <data name="Map_Nevada" xml:space="preserve">
     <value>Nevada</value>

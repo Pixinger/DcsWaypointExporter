@@ -169,6 +169,19 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3rd party dependencies:
+        ///https://github.com/CommunityToolkit/dotnet (MIT)
+        ///https://github.com/coverlet-coverage/coverlet (MIT)
+        ///https://nlog-project.org/ (BSD3 clause)
+        ///XUnit (Apache 2.0) ähnelt.
+        /// </summary>
+        public static string License3rd {
+            get {
+                return ResourceManager.GetString("License3rd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die MIT License
         ///
         ///Copyright (c) 2024 Pixinger
@@ -230,6 +243,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string Map_Kola {
             get {
                 return ResourceManager.GetString("Map_Kola", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mariana Islands ähnelt.
+        /// </summary>
+        public static string Map_MarianaIslands {
+            get {
+                return ResourceManager.GetString("Map_MarianaIslands", resourceCulture);
             }
         }
         

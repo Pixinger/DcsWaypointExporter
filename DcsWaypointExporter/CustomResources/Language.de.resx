@@ -240,4 +240,7 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="Map_MarianaIslands" xml:space="preserve">
+    <value>Mariannen Inseln</value>
+  </data>
 </root>
