@@ -2,7 +2,7 @@
   <!-- DO MODIFY: -->
   <PropertyGroup>
     <PixVersionSuffix>1.0.0</PixVersionSuffix>
-    <PixVersionExtension>-alpha3</PixVersionExtension>
+    <PixVersionExtension>-alpha4</PixVersionExtension>
     <!--PixVersionExtension: could be "-alpha1"-->
     <PixProduct>DCS Waypoint Exporter</PixProduct>
     <!-- Bsp. <DefineConstants>MY_CONSTANT</DefineConstants> -->

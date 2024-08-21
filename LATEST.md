@@ -9,3 +9,4 @@ You have been warned!
 
 - Fix: Version
 - Mod: Increased base window size
+- Fix: Line ending in Preset-lua exports where identical.

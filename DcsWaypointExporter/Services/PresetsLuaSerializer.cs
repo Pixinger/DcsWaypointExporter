@@ -89,8 +89,8 @@ namespace DcsWaypointExporter.Services
             try
             {
                 var sb = new StringBuilder();
-                sb.AppendLine("presets = ");
-                sb.AppendLine("{");
+                sb.Append("presets = \n");
+                sb.Append("{\n");
                 foreach (var mission in presets.Missions)
                 {
                     var name = mission.Key;
@@ -162,7 +162,7 @@ namespace DcsWaypointExporter.Services
                                         writeString((string)entry.Value);
                                     }
 
-                                    sb.AppendLine(",");
+                                    sb.Append(",\n");
                                 }
                             }
                             #endregion
