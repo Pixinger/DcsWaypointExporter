@@ -1,7 +1,6 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
 using System.Collections.ObjectModel;
-using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -85,19 +84,59 @@ namespace DcsWaypointExporter.ViewModels
         }
         private bool _isModified = false;
 
+        public Version Version
+        {
+            get => _version;
+            set => SetProperty(ref _version, value);
+        }
+        private Version _version = new Version();
+
 
         public MainWindow()
         {
             // Make sure we have a valid Saved-Games-Dcs folder detected.
-            string? folder = DcsFilesTools.DcsSavedGames;
+            var folder = DcsFilesTools.DcsSavedGames;
             if (string.IsNullOrWhiteSpace(folder))
             {
-                System.Windows.MessageBox.Show("Unable to autodetect the SavedGames-Dcs folder. Please specify it manually in the appsettings.json.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(CustomResources.Language.UnableToDetectSavedGamesFolder, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
             else
             {
                 SelectedMap = Enums.DcsFiles.Caucasus;
             }
+
+            #region function: static Version getAssemblyVersion()
+            static Version getAssemblyVersion()
+            {
+                try
+                {
+                    var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    if (assembly is null)
+                    {
+                        return new Version();
+                    }
+
+                    var name = assembly.GetName();
+                    if (name is null)
+                    {
+                        return new Version();
+                    }
+
+                    var version = name.Version;
+                    if (version is null)
+                    {
+                        return new Version();
+                    }
+
+                    return (Version)version.Clone();
+                }
+                catch
+                {
+                    return new Version();
+                }
+            }
+            #endregion
+            Version = getAssemblyVersion();
         }
 
 
@@ -113,6 +152,19 @@ namespace DcsWaypointExporter.ViewModels
                 }
             }
         }
+
+        #region public IRelayCommand CommandInfo
+        public IRelayCommand CommandInfo => _commandInfo ??= new RelayCommand(
+            execute: () =>
+            {
+                RequiredService<IInfoDialogService>().Execute(new InfoDialog());
+            },
+            canExecute: () =>
+            {
+                return true;
+            });
+        private RelayCommand? _commandInfo;
+        #endregion
 
         #region public IRelayCommand CommandImport
         public IRelayCommand CommandImport => _commandImport ??= new RelayCommand(
@@ -220,7 +272,7 @@ namespace DcsWaypointExporter.ViewModels
 
                 if (!PresetsLua.Missions.Remove(mission.Name))
                 {
-                    System.Windows.MessageBox.Show("Unable to delete selected mission.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(CustomResources.Language.UnableToDeleteMission, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     return;
                 }
 
@@ -261,7 +313,7 @@ namespace DcsWaypointExporter.ViewModels
 
                 if (!RequiredService<IPresetsLuaSerializer>().SerializeToFile(PresetsLua, SelectedMap))
                 {
-                    System.Windows.MessageBox.Show("Unable to save modifications.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(CustomResources.Language.UnableToSaveModifications, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     return;
                 }
 

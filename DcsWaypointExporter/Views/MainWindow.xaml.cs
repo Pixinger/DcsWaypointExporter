@@ -26,7 +26,7 @@ namespace DcsWaypointExporter.Views
             {
                 if (ViewModel.IsModified)
                 {
-                    var result = System.Windows.MessageBox.Show("Do you want to save before exit?", "Save?", System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Question, MessageBoxResult.No);
+                    var result = System.Windows.MessageBox.Show(CustomResources.Language.DoYouWantToSaveBeforeExit, CustomResources.Language.Question, System.Windows.MessageBoxButton.YesNoCancel, System.Windows.MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
                         ViewModel.CommandSave.Execute(null);

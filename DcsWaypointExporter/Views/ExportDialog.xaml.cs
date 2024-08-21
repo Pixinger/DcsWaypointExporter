@@ -27,9 +27,6 @@ namespace DcsWaypointExporter.Views
             return ShowDialog() == true;
         }
 
-        private void OnViewModel_Close()
-        {
-            Close();
-        }
+        private void OnViewModel_Close() => Close();
     }
 }

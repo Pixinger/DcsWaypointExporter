@@ -72,12 +72,10 @@ namespace DcsWaypointExporter.ViewModels
                 await Task.Delay(DEBOUNCE_TIME_MS, token);
 
                 Mission = ImportService.Import(ImportText);
-                s_log.Debug("Checked");
                 return true; // Executed
             }
             catch (TaskCanceledException)
             {
-                s_log.Debug("Aborted");
                 return false; // not executed
             }
         }
@@ -124,7 +122,7 @@ namespace DcsWaypointExporter.ViewModels
             execute: () =>
             {
                 Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-                dialog.Filter = "DCS-Waypoint-Export file (*.dwe)|*.dwe|All files (*.*)|*.*";
+                dialog.Filter = CustomResources.Language.DialogFileFilterDWE;
                 dialog.FilterIndex = 1;
                 dialog.RestoreDirectory = true;
 
@@ -139,7 +137,7 @@ namespace DcsWaypointExporter.ViewModels
                         FileInfo fileInfo = new FileInfo(filename);
                         if (fileInfo.Length / (1024 * 1024) > MAX_FILE_IMPORT_MB)
                         {
-                            System.Windows.MessageBox.Show($"The file seems to be to large. Unable to open files larger than {MAX_FILE_IMPORT_MB}MB.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            System.Windows.MessageBox.Show(string.Format(CustomResources.Language.TheFileSeemsToBeToLarge_UnableToOpenFilesLargerThan_ARG0_Mb, MAX_FILE_IMPORT_MB), CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                             return;
                         }
 
@@ -147,7 +145,7 @@ namespace DcsWaypointExporter.ViewModels
                         var mission = ImportService.Import(allText);
                         if (mission is null)
                         {
-                            System.Windows.MessageBox.Show("The file contains no valid mission data.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            System.Windows.MessageBox.Show(CustomResources.Language.TheFileContainsNoValidMissionData, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                             return;
                         }
 
@@ -175,14 +173,14 @@ namespace DcsWaypointExporter.ViewModels
 
                 if (allText.Length / (1024 * 1024) > MAX_FILE_IMPORT_MB)
                 {
-                    System.Windows.MessageBox.Show($"The clipboard content seems to be to large. Unable to open content larger than {MAX_FILE_IMPORT_MB}MB.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(string.Format(CustomResources.Language.TheClipboardContentSeemsToBeToLarge_UnableToOpenContentLargerThan_ARG0_Mb), CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     return;
                 }
 
                 var mission = ImportService.Import(allText);
                 if (mission is null)
                 {
-                    System.Windows.MessageBox.Show("No valid mission data in the clipboard found.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(CustomResources.Language.NoValidMissionDataInTheClipboardFound, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     return;
                 }
 

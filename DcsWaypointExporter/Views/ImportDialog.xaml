@@ -33,7 +33,6 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition
@@ -88,50 +87,52 @@
             </Grid.ColumnDefinitions>
 
             <!-- Mission Information -->
-            <StackPanel
-                Visibility="{Binding Mission, Converter={StaticResource NullObjectToVisibility}}"
-                Grid.Column="0">
+            <Border
+                Margin="5,0,5,5"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
 
                 <StackPanel
-                    Margin="5,0"
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{StaticResource ImportantTextBlock}"
-                        Text="{x:Static customres:Language.Name_COL}" />
-                    <TextBlock
-                        Style="{StaticResource ImportantTextBlock}"
-                        Margin="5,0,0,0"
-                        Text="{Binding Mission.Name}"
-                        d:Text="MyMission" />
-                </StackPanel>
+                    Visibility="{Binding Mission, Converter={StaticResource NullObjectToVisibility}}"
+                    Grid.Column="0">
 
-                <StackPanel
-                    Margin="5,0"
-                    Orientation="Horizontal">
-                    <TextBlock
-                        Style="{StaticResource ImportantTextBlock}"
-                        Text="{x:Static customres:Language.Waypoints_COL}" />
-                    <TextBlock
-                        Style="{StaticResource ImportantTextBlock}"
-                        Margin="5,0,0,0"
-                        Text="{Binding Mission.Waypoints.Count}"
-                        d:Text="10" />
-                </StackPanel>
+                    <StackPanel
+                        Margin="5,3,5,0"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Style="{StaticResource ImportantTextBlock}"
+                            Text="{Binding Mission.Name}"
+                            d:Text="MyMission" />
+                    </StackPanel>
 
-            </StackPanel>
-            
+                    <StackPanel
+                        Margin="5,0,5,3"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Style="{StaticResource ImportantTextBlock}"
+                            Text="{Binding Mission.Waypoints.Count}"
+                            d:Text="10" />
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            Style="{StaticResource ImportantTextBlock}"
+                            Text="{x:Static customres:Language.Waypoints}" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
             <UniformGrid
                 Grid.Column="1"
                 Columns="2">
                 <Button
-                    Margin="0,5,5,5"
+                    Margin="0,0,5,5"
                     Padding="5"
                     MinWidth="75"
                     Content="{x:Static customres:Language.Ok}"
                     IsDefault="True"
                     Command="{Binding CommandOk}" />
                 <Button
-                    Margin="0,5,5,5"
+                    Margin="0,0,5,5"
                     Padding="5"
                     MinWidth="75"
                     Content="{x:Static customres:Language.Cancel}"

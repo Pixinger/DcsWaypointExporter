@@ -18,8 +18,11 @@
     SizeToContent="WidthAndHeight"
     d:DataContext="{d:DesignInstance {x:Type viewmodels:MainWindow}, IsDesignTimeCreatable=false}">
 
-    <Grid>
+    <Grid
+        Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
             <RowDefinition
                 Height="Auto" />
             <RowDefinition
@@ -28,11 +31,47 @@
                 Height="Auto" />
         </Grid.RowDefinitions>
 
+        <!-- Header: Version & Co -->
+        <Grid
+            Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="1*" />
+                <ColumnDefinition
+                    Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="5,0,0,0"
+                d:Text="Vx.y.z.a"
+                VerticalAlignment="Center"
+                Text="{Binding Version}" />
+            <Button
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,5,0"
+                ToolTip="{x:Static customres:Language.Info}"
+                Command="{Binding ViewModel.CommandInfo, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                CommandParameter="{Binding}">
+                <Image
+                    Style="{StaticResource ItemsControlImage}"
+                    Source="{StaticResource InfoDrawingImage}" />
+
+            </Button>
+        </Grid>
+
         <!-- Maps -->
         <Border
+            Grid.Row="1"
             Margin="5,5,5,0"
             BorderThickness="1"
-            BorderBrush="#AA000000">
+            BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
             <StackPanel
                 Grid.Row="0"
                 Margin="5,0,5,0"
@@ -53,13 +92,6 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-
-                <Button
-                    Margin="0,10,0,0"
-                    Content="{x:Static customres:Language.Import}"
-                    Command="{Binding CommandImport}"
-                    CommandParameter="{Binding}">
-                </Button>
 
                 <!-- Missions -->
                 <Border
@@ -129,6 +161,13 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
+                        <Button
+                            Margin="6,-4,6,7"
+                            Content="{x:Static customres:Language.Import}"
+                            Command="{Binding CommandImport}"
+                            CommandParameter="{Binding}">
+                        </Button>
 
                     </StackPanel>
                 </Border>

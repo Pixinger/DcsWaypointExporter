@@ -26,7 +26,7 @@ namespace DcsWaypointExporter.ViewModels
             if (exportedText is null)
             {
                 ExportedText = string.Empty;
-                System.Windows.MessageBox.Show("Unable generate mission export.", "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(CustomResources.Language.UnableToGenerateMissionExport, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace DcsWaypointExporter.ViewModels
                 }
 
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-                dialog.Filter = "DCS-Waypoint-Export file (*.dwe)|*.dwe|All files (*.*)|*.*";
+                dialog.Filter = CustomResources.Language.DialogFileFilterDWE;
                 dialog.FilterIndex = 1;
                 dialog.RestoreDirectory = true;
 
