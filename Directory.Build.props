@@ -1,0 +1,22 @@
+<Project>
+  <!-- DO MODIFY: -->
+  <PropertyGroup>
+    <PixVersionSuffix>1.0.0</PixVersionSuffix>
+    <PixVersionExtension>-alpha1</PixVersionExtension>
+    <!--PixVersionExtension: could be "-alpha1"-->
+    <PixProduct>DCS Waypoint Exporter</PixProduct>
+    <!-- Bsp. <DefineConstants>MY_CONSTANT</DefineConstants> -->
+  </PropertyGroup>
+
+  <!-- Automatic build of assembly information: DO NOT MODIFY! -->
+  <PropertyGroup>
+    <AssemblyVersion>$(PixVersionSuffix)</AssemblyVersion>
+    <Version>$(PixVersionSuffix)$(PixVersionExtension)</Version>
+    <SourceRevisionId>abcd</SourceRevisionId>
+    <Product>$(PixProduct)</Product>
+    <Company>pixinger at github.com</Company>
+    <Authors>pixinger at github.com</Authors>
+    <Copyright>Copyright © pixinger at github.com $([System.DateTime]::Now.ToString("yyyy"))</Copyright>
+  </PropertyGroup>
+
+</Project>

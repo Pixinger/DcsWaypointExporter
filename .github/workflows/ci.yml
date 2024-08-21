@@ -1,0 +1,67 @@
+name: Build and Test
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build solution
+      run: dotnet build --no-restore --configuration Release
+
+    #- name: Run all tests
+    #  run: dotnet test --no-build --configuration Release
+
+    - name: Publish
+      run: dotnet publish ./DcsWaypointExporter/DcsWaypointExporter.csproj --configuration Release --output ./publish
+    
+    - name: Remove .pdb files
+      run: |
+        Remove-Item -Path ./publish/*.pdb -ErrorAction Ignore
+
+    - name: Create ZIP file
+      run: |
+        cd publish
+        powershell Compress-Archive -Path * -DestinationPath ../DcsWaypointExporter.zip
+        cd ..
+
+    - name: Upload ZIP as an artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: DcsWaypointExporter-zip
+        path: DcsWaypointExporter.zip
+        
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download ZIP artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: DcsWaypointExporter-zip
+        
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        prerelease: true
+        body_path: ./LATEST.md
+        files:
+          DcsWaypointExporter.zip

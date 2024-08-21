@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DialogFileFilterDWE" xml:space="preserve">
+    <value>DCS-Waypoint-Export file (*.dwe)|*.dwe|All files (*.*)|*.*</value>
+  </data>
+  <data name="DoYouWantToSaveBeforeExit" xml:space="preserve">
+    <value>Do you want to save before exit?</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="FromClipboard" xml:space="preserve">
+    <value>From Clipboard</value>
+  </data>
+  <data name="FromFile" xml:space="preserve">
+    <value>From File</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="LicenseMIT" xml:space="preserve">
+    <value>MIT License
+
+Copyright (c) 2024 Pixinger
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="Map_Afghanistan" xml:space="preserve">
+    <value>Afghanistan</value>
+  </data>
+  <data name="Map_Caucasus" xml:space="preserve">
+    <value>Caucasus</value>
+  </data>
+  <data name="Map_COL" xml:space="preserve">
+    <value>Map:</value>
+  </data>
+  <data name="Map_Kola" xml:space="preserve">
+    <value>Kola</value>
+  </data>
+  <data name="Map_Nevada" xml:space="preserve">
+    <value>Nevada</value>
+  </data>
+  <data name="Map_Normandy1944" xml:space="preserve">
+    <value>Normandy 1944</value>
+  </data>
+  <data name="Map_Normandy2" xml:space="preserve">
+    <value>Normandy 2.0</value>
+  </data>
+  <data name="Map_PersianGulf" xml:space="preserve">
+    <value>Persian Gulf</value>
+  </data>
+  <data name="Map_Sinai" xml:space="preserve">
+    <value>Sinai</value>
+  </data>
+  <data name="Map_SouthAtlantic" xml:space="preserve">
+    <value>South Altlantic</value>
+  </data>
+  <data name="Map_Syria" xml:space="preserve">
+    <value>Syria</value>
+  </data>
+  <data name="Map_TheChannel" xml:space="preserve">
+    <value>The Channel</value>
+  </data>
+  <data name="Missions_COL" xml:space="preserve">
+    <value>Missions:</value>
+  </data>
+  <data name="Name_COL" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NoValidMissionDataInTheClipboardFound" xml:space="preserve">
+    <value>No valid mission data in the clipboard found.</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TheClipboardContentSeemsToBeToLarge_UnableToOpenContentLargerThan_ARG0_Mb" xml:space="preserve">
+    <value>The clipboard content seems to be to large. Unable to open content larger than {0} MB.</value>
+  </data>
+  <data name="TheFileContainsNoValidMissionData" xml:space="preserve">
+    <value>The file contains no valid mission data.</value>
+  </data>
+  <data name="TheFileSeemsToBeToLarge_UnableToOpenFilesLargerThan_ARG0_Mb" xml:space="preserve">
+    <value>The file seems to be to large. Unable to open files larger than {0} MB.</value>
+  </data>
+  <data name="ToClipboard" xml:space="preserve">
+    <value>To Clipboard</value>
+  </data>
+  <data name="ToFile" xml:space="preserve">
+    <value>To File</value>
+  </data>
+  <data name="UnableToDeleteMission" xml:space="preserve">
+    <value>Unable to delete mission.</value>
+  </data>
+  <data name="UnableToDetectSavedGamesFolder" xml:space="preserve">
+    <value>Unable to autodetect the "SavedGames\Dcs" folder. Please specify it manually in the appsettings.json.</value>
+  </data>
+  <data name="UnableToGenerateMissionExport" xml:space="preserve">
+    <value>Unable generate mission export.</value>
+  </data>
+  <data name="UnableToSaveModifications" xml:space="preserve">
+    <value>Unable to save modifications.</value>
+  </data>
+  <data name="Waypoints" xml:space="preserve">
+    <value>Waypoints</value>
+  </data>
+</root>
