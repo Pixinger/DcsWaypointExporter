@@ -1,6 +1,8 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reflection;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -91,6 +93,13 @@ namespace DcsWaypointExporter.ViewModels
         }
         private Version _version = new Version();
 
+        public string? ProductVersion
+        {
+            get => _productVersion;
+            set => SetProperty(ref _productVersion, value);
+        }
+        private string? _productVersion = string.Empty;
+
 
         public MainWindow()
         {
@@ -137,6 +146,34 @@ namespace DcsWaypointExporter.ViewModels
             }
             #endregion
             Version = getAssemblyVersion();
+
+            #region static string? getAssemblyProductVersion()
+            static string? getAssemblyProductVersion()
+            {
+                var assemblyPath = Assembly.GetEntryAssembly()?.Location;
+                if (assemblyPath is null)
+                {
+                    return null;
+                }
+
+                var filename = new FileInfo(assemblyPath).FullName;
+                if (!System.IO.File.Exists(filename))
+                {
+                    return null;
+                }
+
+                try
+                {
+                    var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(filename);
+                    return fileVersionInfo.ProductVersion;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            #endregion
+            ProductVersion = getAssemblyProductVersion();
         }
 
 
@@ -157,7 +194,7 @@ namespace DcsWaypointExporter.ViewModels
         public IRelayCommand CommandInfo => _commandInfo ??= new RelayCommand(
             execute: () =>
             {
-                RequiredService<IInfoDialogService>().Execute(new InfoDialog());
+                RequiredService<IInfoDialogService>().Execute(new InfoDialog(ProductVersion));
             },
             canExecute: () =>
             {
