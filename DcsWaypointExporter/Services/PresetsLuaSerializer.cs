@@ -12,12 +12,78 @@ using static DcsWaypointExporter.Models.PresetsLua.Mission;
 
 namespace DcsWaypointExporter.Services
 {
-    internal class PresetsLuaSerializer : IPresetsLuaSerializer
+    public class PresetsLuaSerializer : IPresetsLuaSerializer
     {
         #region nLog instance (s_log)
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
         #endregion
 
+        public bool SerializeToFile_XUnit(PresetsLua presets, string filename) => SerializeToFile(presets, filename);
+        public bool SerializeToFile(PresetsLua presets, DcsFiles file)
+        {
+            try
+            {
+                var filename = DcsFilesTools.GetFullFilename(file);
+                if (filename is null)
+                {
+                    s_log.Error("Unable to get filename for file {0}", file);
+                    return false;
+                }
+
+                var allText = SerializeToString(presets);
+                if (allText is null)
+                {
+                    s_log.Error("Unable to serialize file ({0}/{1}).", file, filename);
+                    return false;
+                }
+
+                try
+                {
+                    File.WriteAllText(filename, allText, new UTF8Encoding(false));
+                }
+                catch (Exception ex)
+                {
+                    s_log.Error(ex, "Unable to write file ({0}/{1}).", file, filename);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                s_log.Error(ex, "Unexpected exception");
+                return false;
+            }
+        }
+        public bool SerializeToFile(PresetsLua presets, string filename)
+        {
+            try
+            {
+                var allText = SerializeToString(presets);
+                if (allText is null)
+                {
+                    s_log.Error("Unable to serialize file ({0}).", filename);
+                    return false;
+                }
+
+                try
+                {
+                    File.WriteAllText(filename, allText, new UTF8Encoding(false));
+                }
+                catch (Exception ex)
+                {
+                    s_log.Error(ex, "Unable to write file ({0}).", filename);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                s_log.Error(ex, "Unexpected exception");
+                return false;
+            }
+        }
         public string? SerializeToString(PresetsLua presets)
         {
             try
@@ -124,6 +190,52 @@ namespace DcsWaypointExporter.Services
             catch (Exception ex)
             {
                 s_log.Error(ex, "Unexpected exception.");
+                return null;
+            }
+        }
+
+        public PresetsLua? DeserializeFromFile_XUnit(string filename) => DeserializeFromFile(filename);
+        public PresetsLua? DeserializeFromFile(DcsFiles file)
+        {
+            try
+            {
+                var filename = DcsFilesTools.GetFullFilename(file);
+                if (filename is null)
+                {
+                    s_log.Error("Unable to get filename for file {0}", file);
+                    return null;
+                }
+
+                return DeserializeFromFile(filename);
+            }
+            catch (Exception ex)
+            {
+                s_log.Error(ex, "Unexpected exception");
+                return null;
+            }
+        }
+        private PresetsLua? DeserializeFromFile(string filename)
+        {
+            try
+            {
+                if (!File.Exists(filename))
+                {
+                    s_log.Error("File not found ({0}).", filename);
+                    return null;
+                }
+
+                var allText = File.ReadAllText(filename, new UTF8Encoding(false));
+                if (allText is null)
+                {
+                    s_log.Error("Unable to read file ({0}).", filename);
+                    return null;
+                }
+
+                return DeserializeFromString(allText);
+            }
+            catch (Exception ex)
+            {
+                s_log.Error(ex, "Unexpected exception");
                 return null;
             }
         }
@@ -234,73 +346,5 @@ namespace DcsWaypointExporter.Services
             }
         }
 
-        public bool SerializeToFile(PresetsLua presets, DcsFiles file)
-        {
-            try
-            {
-                var filename = DcsFilesTools.GetFullFilename(file);
-                if (filename is null)
-                {
-                    s_log.Error("Unable to get filename for file {0}", file);
-                    return false;
-                }
-
-                var allText = SerializeToString(presets);
-                if (allText is null)
-                {
-                    s_log.Error("Unable to serialize file ({0}/{1}).", file, filename);
-                    return false;
-                }
-
-                try
-                {
-                    File.WriteAllText(filename, allText, new UTF8Encoding(false));
-                }
-                catch (Exception ex)
-                {
-                    s_log.Error(ex, "Unable to write file ({0}/{1}).", file, filename);
-                    return false;
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                s_log.Error(ex, "Unexpected exception");
-                return false;
-            }
-        }
-        public PresetsLua? DeserializeFromFile(DcsFiles file)
-        {
-            try
-            {
-                var filename = DcsFilesTools.GetFullFilename(file);
-                if (filename is null)
-                {
-                    s_log.Error("Unable to get filename for file {0}", file);
-                    return null;
-                }
-
-                if (!File.Exists(filename))
-                {
-                    s_log.Error("File not found ({0}/{1}).", file, filename);
-                    return null;
-                }
-
-                var allText = File.ReadAllText(filename, new UTF8Encoding(false));
-                if (allText is null)
-                {
-                    s_log.Error("Unable to read file ({0}/{1}).", file, filename);
-                    return null;
-                }
-
-                return DeserializeFromString(allText);
-            }
-            catch (Exception ex)
-            {
-                s_log.Error(ex, "Unexpected exception");
-                return null;
-            }
-        }
     }
 }
