@@ -15,7 +15,7 @@ You can specify your custom directory in the file `appsettings.json`. Please mak
 The file could look something like this:
 ```
 {
-    "DcsSavedGamesFolder": "C:\Users\MyName\Saved Games\DCS"
+    "DcsSavedGamesFolder": "C:/Users/MyName/Saved Games/DCS"
 }
 ```
 
