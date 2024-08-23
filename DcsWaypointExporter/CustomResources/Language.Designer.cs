@@ -61,6 +61,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The folder for &apos;c:\users\{username}\saved games\dcs&apos; was not found or it could not be explicit identified. Please specify the folder you this application to use. ähnelt.
+        /// </summary>
+        public static string AutoFolderDialogInfo {
+            get {
+                return ResourceManager.GetString("AutoFolderDialogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
         /// </summary>
         public static string Cancel {
@@ -129,6 +138,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string Export {
             get {
                 return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Folder setup ähnelt.
+        /// </summary>
+        public static string FolderSetup {
+            get {
+                return ResourceManager.GetString("FolderSetup", resourceCulture);
             }
         }
         
@@ -364,6 +382,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Or specify manually: ähnelt.
+        /// </summary>
+        public static string OrSpecifyManually {
+            get {
+                return ResourceManager.GetString("OrSpecifyManually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Question ähnelt.
         /// </summary>
         public static string Question {
@@ -378,6 +405,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select auto detected folder: ähnelt.
+        /// </summary>
+        public static string SelectAutoDetectedFolder {
+            get {
+                return ResourceManager.GetString("SelectAutoDetectedFolder", resourceCulture);
             }
         }
         

@@ -104,7 +104,8 @@ namespace DcsWaypointExporter.ViewModels
         public MainWindow()
         {
             // Make sure we have a valid Saved-Games-Dcs folder detected.
-            var folder = DcsFilesTools.DcsSavedGames;
+            var settings = RequiredService<ISettingsService>();
+            var folder = settings.DcsSavedGames;
             if (string.IsNullOrWhiteSpace(folder))
             {
                 System.Windows.MessageBox.Show(CustomResources.Language.UnableToDetectSavedGamesFolder, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);

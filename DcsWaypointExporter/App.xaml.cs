@@ -94,6 +94,7 @@ namespace DcsWaypointExporter
             services.AddTransient<Services.Dialogs.IImportDialogService, Views.ImportDialog>();
             services.AddTransient<Services.Dialogs.IExportDialogService, Views.ExportDialog>();
             services.AddTransient<Services.Dialogs.IInfoDialogService, Views.InfoDialog>();
+            services.AddTransient<Services.Dialogs.IFolderSetupService, Views.FolderSetupDialog>();
         }
 
         /// <summary>

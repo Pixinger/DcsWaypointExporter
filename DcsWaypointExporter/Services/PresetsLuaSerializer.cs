@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Extensions;
 using DcsWaypointExporter.Models;
@@ -23,7 +24,7 @@ namespace DcsWaypointExporter.Services
         {
             try
             {
-                var filename = DcsFilesTools.GetFullFilename(file);
+                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(file);
                 if (filename is null)
                 {
                     s_log.Error("Unable to get filename for file {0}", file);
@@ -199,7 +200,7 @@ namespace DcsWaypointExporter.Services
         {
             try
             {
-                var filename = DcsFilesTools.GetFullFilename(file);
+                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(file);
                 if (filename is null)
                 {
                     s_log.Error("Unable to get filename for file {0}", file);

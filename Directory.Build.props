@@ -1,8 +1,8 @@
 <Project>
   <!-- DO MODIFY: -->
   <PropertyGroup>
-    <PixVersionSuffix>1.0.0</PixVersionSuffix>
-    <PixVersionExtension>-alpha5</PixVersionExtension>
+    <PixVersionSuffix>1.0.1</PixVersionSuffix>
+    <PixVersionExtension></PixVersionExtension>
     <!--PixVersionExtension: could be "-alpha1"-->
     <PixProduct>DCS Waypoint Exporter</PixProduct>
     <!-- Bsp. <DefineConstants>MY_CONSTANT</DefineConstants> -->

@@ -243,4 +243,16 @@
   <data name="Map_MarianaIslands" xml:space="preserve">
     <value>Mariannen Inseln</value>
   </data>
+  <data name="FolderSetup" xml:space="preserve">
+    <value>Verzeichnis Einstellung</value>
+  </data>
+  <data name="AutoFolderDialogInfo" xml:space="preserve">
+    <value>Der Ordner für 'c:\users\{username}\saved games\dcs' konnte nicht oder nicht eindeutig gefunden werden. Bitte legen sie den Ordner der von dieser Anwendung verwendet werden soll fest.</value>
+  </data>
+  <data name="OrSpecifyManually" xml:space="preserve">
+    <value>Oder lege es manuell fest:</value>
+  </data>
+  <data name="SelectAutoDetectedFolder" xml:space="preserve">
+    <value>Wähle ein automatisch erkanntes Verzeichnis:</value>
+  </data>
 </root>
