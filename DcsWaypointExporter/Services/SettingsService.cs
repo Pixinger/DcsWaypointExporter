@@ -2,10 +2,14 @@
 
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DcsWaypointExporter.Enums;
+using DcsWaypointExporter.Extensions;
 using DcsWaypointExporter.Services.Dialogs;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace DcsWaypointExporter.Services
 {
@@ -18,8 +22,19 @@ namespace DcsWaypointExporter.Services
         #region private class JsonFile
         private class JsonFile
         {
-            public string? DcsSavedGames { get; set; } = null;
-
+            public string? DcsSavedGamesFolder
+            {
+                get => _dcsSavedGamesFolder;
+                set
+                {
+                    if (_dcsSavedGamesFolder != value)
+                    {
+                        _dcsSavedGamesFolder = value;
+                        UpdateConfiguration(nameof(DcsSavedGamesFolder), DcsSavedGamesFolder.ToNonNull());
+                    }
+                }
+            }
+            private string? _dcsSavedGamesFolder = null;
 
             private JsonFile()
             {
@@ -39,15 +54,16 @@ namespace DcsWaypointExporter.Services
                         .SetBasePath(Directory.GetCurrentDirectory())
                         .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-                    var _configuration = builder.Build();
+                    var configuration = builder.Build();
 
                     // Zugriff auf die Konfiguration
-                    var text = _configuration["DcsSavedGamesFolder"];
+                    var text = configuration["DcsSavedGamesFolder"];
                     if (string.IsNullOrWhiteSpace(text))
                     {
+                        text = string.Empty;
                     }
 
-                    return new JsonFile() { DcsSavedGames = text };
+                    return new JsonFile() { DcsSavedGamesFolder = text };
                 }
                 catch (Exception ex)
                 {
@@ -55,11 +71,38 @@ namespace DcsWaypointExporter.Services
                     return new();
                 }
             }
-            public bool Save()
+
+            private bool UpdateConfiguration(string key, string newValue)
             {
-                //TODO: Implement here!
-                return false;
+                try
+                {
+                    // Beispiel: Änderung eines Wertes
+                    var filename = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+                    // Lies die aktuelle JSON-Datei als Dictionary
+                    var jsonConfiguration = new JsonConfigurationProvider(new JsonConfigurationSource { Path = filename });
+                    jsonConfiguration.Load(new FileStream(filename, FileMode.Open, FileAccess.Read));
+
+                    var configData = new Dictionary<string, string>();
+                    jsonConfiguration.TryGet(key, out var _);
+
+                    // Aktualisiere den Wert
+                    configData[key] = newValue;
+
+                    // Schreibe die geänderte Konfiguration zurück in die Datei
+                    var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+                    var jsonString = JsonSerializer.Serialize(configData, jsonOptions);
+
+                    File.WriteAllText(filename, jsonString);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    s_log.Error(ex, "Unexpected exception");
+                    return false;
+                }
             }
+
         }
         #endregion
         private readonly JsonFile _jsonFile = JsonFile.LoadFromJson();
@@ -81,14 +124,14 @@ namespace DcsWaypointExporter.Services
             if (_dcsSavedGames is null)
             {
                 // Try to solve the problem by showing a configuration dialog.
-                var viewModel = new ViewModels.FolderSetupDialog(_jsonFile.DcsSavedGames);
+                var viewModel = new ViewModels.FolderSetupDialog(_jsonFile.DcsSavedGamesFolder);
                 if (Ioc.Default.GetRequiredService<IFolderSetupService>().Execute(viewModel) == true)
                 {
                     _dcsSavedGames = viewModel.Fullname;
                     Debug.Assert(Directory.Exists(_dcsSavedGames));
 
-                    _jsonFile.DcsSavedGames = _dcsSavedGames;
-                    _jsonFile.Save();
+                    // Setting this value will automatically write the config to the harddisk.
+                    _jsonFile.DcsSavedGamesFolder = _dcsSavedGames;
                 }
                 else
                 {
@@ -106,7 +149,7 @@ namespace DcsWaypointExporter.Services
         /// <returns>If existst the fullname of the DCS folder is returned. If not found or multiple possible solutions, this mehtod will return <see langword="null"/>.</returns>
         private string? UpdateDcsSavedGames()
         {
-            var cfgFolder = _jsonFile?.DcsSavedGames;
+            var cfgFolder = _jsonFile?.DcsSavedGamesFolder;
             if (!string.IsNullOrWhiteSpace(cfgFolder))
             {
                 if (cfgFolder.EndsWith('\\'))
