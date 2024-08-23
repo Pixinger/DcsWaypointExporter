@@ -55,7 +55,11 @@ namespace DcsWaypointExporter.Services
                     return new();
                 }
             }
-            public bool Save() => false;
+            public bool Save()
+            {
+                //TODO: Implement here!
+                return false;
+            }
         }
         #endregion
         private readonly JsonFile _jsonFile = JsonFile.LoadFromJson();
