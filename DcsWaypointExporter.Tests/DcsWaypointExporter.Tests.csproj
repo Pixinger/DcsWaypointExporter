@@ -13,9 +13,17 @@
     <None Remove="Data\Caucasus.lua" />
     <None Remove="Data\CaucasusAdded.lua" />
     <None Remove="Data\CaucasusMissing.lua" />
+    <None Remove="Data\CaucasusSorted.lua" />
+    <None Remove="Data\CaucasusUnsorted.lua" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\CaucasusSorted.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\CaucasusUnsorted.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\CaucasusMissing.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

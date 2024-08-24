@@ -2,7 +2,6 @@
 
 using System.Collections;
 using System.Security.Cryptography;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using DcsWaypointExporter.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +10,13 @@ namespace DcsWaypointExporter.Tests
     public class TestsMain : IClassFixture<DependencyInjectionFixture>
     {
         private const string CAUCASUS_LUA = @".\Data\Caucasus.lua";
+        private const string CAUCASUS_LUA_OUT = @".\Data\CaucasusOut.lua";
         private const string CAUCASUS_ADDED_LUA = @".\Data\CaucasusAdded.lua";
         private const string CAUCASUS_MISSING_LUA = @".\Data\CaucasusMissing.lua";
+        private const string CAUCASUS_SORTED_LUA = @".\Data\CaucasusSorted.lua";
+        private const string CAUCASUS_SORTED_LUA_OUT = @".\Data\CaucasusSortedOut.lua";
+        private const string CAUCASUS_UNSORTED_LUA = @".\Data\CaucasusUnsorted.lua";
+        private const string CAUCASUS_UNSORTED_LUA_OUT = @".\Data\CaucasusUnsortedOut.lua";
 
         private readonly IServiceProvider _serviceProvider;
 
@@ -28,47 +32,20 @@ namespace DcsWaypointExporter.Tests
         [Fact(DisplayName = "PresetLua: Deserialize -> Serialize cycle")]
         public void PresetLua_ReadWriteCycle()
         {
-            const string filename1 = @".\Data\Caucasus.lua";
-            const string filename2 = @".\Data\CaucasusOut.lua";
-            try
-            {
-                if (File.Exists(filename2))
-                    File.Delete(filename2);
-            }
-            catch
-            {
-                Assert.Fail(string.Format("Unable to delete file: {0}", filename2));
-            }
+            // Delete generated files.
+            DeleteFile(CAUCASUS_LUA_OUT);
 
             var serializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
-            var instance = serializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, filename1);
+            var instance = serializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, CAUCASUS_LUA);
             Assert.NotNull(instance);
-            Assert.True(serializer.SerializeToFile_XUnit(instance, filename2));
-            Assert.True(File.Exists(filename2));
+            Assert.True(serializer.SerializeToFile_XUnit(instance, CAUCASUS_LUA_OUT));
+            Assert.True(File.Exists(CAUCASUS_LUA_OUT));
 
             // Compare Files
-            #region function: static byte[] computeHash(HashAlgorithm hashAlgorithm, string filePath)
-            static byte[] computeHash(HashAlgorithm hashAlgorithm, string filePath)
-            {
-                using (var stream = File.OpenRead(filePath))
-                {
-                    return hashAlgorithm.ComputeHash(stream);
-                }
-            }
-            #endregion
-            #region function: static bool filesAreIdentical(string path1, string path2)
-            static bool filesAreIdentical(string path1, string path2)
-            {
-                using (var sha256 = SHA256.Create())
-                {
-                    var hash1 = computeHash(sha256, path1);
-                    var hash2 = computeHash(sha256, path2);
+            Assert.True(FilesAreIdentical(CAUCASUS_LUA, CAUCASUS_LUA_OUT));
 
-                    return StructuralComparisons.StructuralEqualityComparer.Equals(hash1, hash2);
-                }
-            }
-            #endregion
-            Assert.True(filesAreIdentical(filename1, filename2));
+            // Delete generated files.
+            DeleteFile(CAUCASUS_LUA_OUT);
         }
 
         /// <summary>
@@ -95,12 +72,12 @@ namespace DcsWaypointExporter.Tests
 
                 Assert.NotNull(missionImported);
                 Assert.StrictEqual(missionImported.Waypoints.Count, missionPair.Value.Waypoints.Count);
-                for (int i = 0; i < missionImported.Waypoints.Count; i++)
+                for (var i = 0; i < missionImported.Waypoints.Count; i++)
                 {
                     var left = missionImported.Waypoints[i];
                     var right = missionPair.Value.Waypoints[i];
 
-                    foreach (KeyValuePair<string, dynamic> l in left.Entries)
+                    foreach (var l in left.Entries)
                     {
                         Assert.True(right.Entries.ContainsKey(l.Key));
                         var r = right.Entries[l.Key];
@@ -122,7 +99,7 @@ namespace DcsWaypointExporter.Tests
             Assert.True(missionSerializer.Export(DcsMaps.Caucasus, presetLua.Missions.ElementAt(0).Value, out var exportedText));
 
             const int COUNT = 20;
-            for (int i = 0; i < COUNT; i++)
+            for (var i = 0; i < COUNT; i++)
             {
                 var position = Random.Shared.Next(0, exportedText.Length - 1);
                 var badText = exportedText.Remove(position, 1);
@@ -148,6 +125,82 @@ namespace DcsWaypointExporter.Tests
             var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
             var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText, true);
             Assert.Null(presetLua);
+        }
+
+        [Fact]
+        public void IntegrityVerification_Sorted()
+        {
+            // Delete generated files.
+            DeleteFile(CAUCASUS_SORTED_LUA_OUT);
+
+            // Speichern
+            var serializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var instance = serializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, CAUCASUS_SORTED_LUA);
+            Assert.NotNull(instance);
+            Assert.True(serializer.SerializeToFile_XUnit(instance, CAUCASUS_SORTED_LUA_OUT));
+            Assert.True(File.Exists(CAUCASUS_SORTED_LUA_OUT));
+
+            // Compare Files
+            Assert.True(FilesAreIdentical(CAUCASUS_SORTED_LUA, CAUCASUS_SORTED_LUA_OUT));
+
+            // Delete generated files.
+            DeleteFile(CAUCASUS_SORTED_LUA_OUT);
+        }
+
+        [Fact]
+        public void IntegrityVerification_Unsorted()
+        {
+            // Delete generated files.
+            DeleteFile(CAUCASUS_UNSORTED_LUA_OUT);
+
+            // Speichern
+            var serializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var instance = serializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, CAUCASUS_UNSORTED_LUA);
+            Assert.NotNull(instance);
+            Assert.True(serializer.SerializeToFile_XUnit(instance, CAUCASUS_UNSORTED_LUA_OUT));
+            Assert.True(File.Exists(CAUCASUS_UNSORTED_LUA_OUT));
+
+            // Compare Files
+            var iden = FilesAreIdentical(CAUCASUS_UNSORTED_LUA, CAUCASUS_UNSORTED_LUA_OUT);
+            Assert.False(iden);
+
+            // Delete generated files.
+            DeleteFile(CAUCASUS_UNSORTED_LUA_OUT);
+        }
+
+
+        // ----------------------------------------------------------------------------------------------------
+        ///  Helper Methods
+        // ----------------------------------------------------------------------------------------------------
+        private static byte[] ComputeHash(HashAlgorithm hashAlgorithm, string filePath)
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                return hashAlgorithm.ComputeHash(stream);
+            }
+        }
+        private static bool FilesAreIdentical(string path1, string path2)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hash1 = ComputeHash(sha256, path1);
+                var hash2 = ComputeHash(sha256, path2);
+
+                return StructuralComparisons.StructuralEqualityComparer.Equals(hash1, hash2);
+            }
+        }
+        private static void DeleteFile(string filename)
+        {
+            try
+            {
+                if (File.Exists(filename))
+                {
+                    File.Delete(filename);
+                }
+            }
+            catch
+            {
+            }
         }
     }
 }
