@@ -272,6 +272,9 @@ SOFTWARE.</value>
   <data name="TheFileSeemsToBeToLarge_UnableToOpenFilesLargerThan_ARG0_Mb" xml:space="preserve">
     <value>The file seems to be to large. Unable to open files larger than {0} MB.</value>
   </data>
+  <data name="TheMapHasUnsavedModifications" xml:space="preserve">
+    <value>The map has unsaved modifications. Do you want to save them?</value>
+  </data>
   <data name="ToClipboard" xml:space="preserve">
     <value>To Clipboard</value>
   </data>

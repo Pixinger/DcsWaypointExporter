@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -39,6 +40,32 @@ namespace DcsWaypointExporter.ViewModels
             get => _selectedMap;
             set
             {
+                if (SelectedMap == value)
+                {
+                    return;
+                }
+
+                // Save existing modifications
+                if (IsModified)
+                {
+                    var result = MessageBox.Show(CustomResources.Language.TheMapHasUnsavedModifications,
+                        CustomResources.Language.Question,
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question,
+                        MessageBoxResult.Yes);
+
+                    if ((result == MessageBoxResult.Yes) && (PresetsLua is not null))
+                    {
+                        IsModified = false;
+                        if (!RequiredService<IPresetsLuaSerializer>().SerializeToFile(PresetsLua, SelectedMap))
+                        {
+                            System.Windows.MessageBox.Show(CustomResources.Language.UnableToSaveModifications, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                }
+
+                // Now we can change the property.
                 if (SetProperty(ref _selectedMap, value))
                 {
                     PresetsLua = RequiredService<IPresetsLuaSerializer>().DeserializeFromFile(SelectedMap);
@@ -54,6 +81,7 @@ namespace DcsWaypointExporter.ViewModels
             {
                 if (SetProperty(ref _presetsLua, value))
                 {
+                    IsModified = false;
                     UpdateAvailableMissions();
                     CommandImport.NotifyCanExecuteChanged();
                 }

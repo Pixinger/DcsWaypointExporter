@@ -267,4 +267,7 @@
   <data name="UnableToRenameMission" xml:space="preserve">
     <value>Die Mission konnte nicht umbenannt werden.</value>
   </data>
+  <data name="TheMapHasUnsavedModifications" xml:space="preserve">
+    <value>Die Karte hat ungespeicherte Änderungen. Wollen Sie diese speichern?</value>
+  </data>
 </root>
