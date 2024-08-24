@@ -10,8 +10,8 @@ namespace DcsWaypointExporter.Services
         bool SerializeToFile(PresetsLua presets, Enums.DcsMaps file);
         bool SerializeToFile_XUnit(PresetsLua presets, string filename);
 
-        PresetsLua? DeserializeFromString(Enums.DcsMaps map, string text);
-        PresetsLua? DeserializeFromFile(Enums.DcsMaps map);
+        PresetsLua? DeserializeFromString(Enums.DcsMaps map, string text, bool noMessageBox = false);
+        PresetsLua? DeserializeFromFile(Enums.DcsMaps map, bool noMessageBox = false);
         PresetsLua? DeserializeFromFile_XUnit(Enums.DcsMaps map, string filename);
     }
 }

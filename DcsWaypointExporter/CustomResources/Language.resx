@@ -138,6 +138,9 @@
   <data name="DoYouWantToSaveBeforeExit" xml:space="preserve">
     <value>Do you want to save before exit?</value>
   </data>
+  <data name="EdChangedFileFormat" xml:space="preserve">
+    <value>ED seems to have changed the LUA file format. For safety reasons the file will not be loaded.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>

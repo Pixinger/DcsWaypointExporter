@@ -19,6 +19,21 @@ namespace DcsWaypointExporter.Services
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
         #endregion
 
+        #region private static readonly List<string> _expectedKeys
+        private static readonly List<string> _expectedKeys = new List<string>([
+            "speed_locked",
+            "type",
+            "action",
+            "ETA_locked",
+            "x",
+            "y",
+            "name",
+            "alt",
+            "alt_type",
+            "ETA"]);
+        #endregion
+        private const int EXPECTED_VALUES_COUNT = 10;
+
         public bool SerializeToFile_XUnit(PresetsLua presets, string filename) => SerializeToFile(presets, filename);
         public bool SerializeToFile(PresetsLua presets, DcsMaps file)
         {
@@ -195,8 +210,8 @@ namespace DcsWaypointExporter.Services
             }
         }
 
-        public PresetsLua? DeserializeFromFile_XUnit(DcsMaps map, string filename) => DeserializeFromFile(map, filename);
-        public PresetsLua? DeserializeFromFile(DcsMaps map)
+        public PresetsLua? DeserializeFromFile_XUnit(DcsMaps map, string filename) => DeserializeFromFile(map, filename, true);
+        public PresetsLua? DeserializeFromFile(DcsMaps map, bool noMessageBox)
         {
             try
             {
@@ -207,7 +222,7 @@ namespace DcsWaypointExporter.Services
                     return null;
                 }
 
-                return DeserializeFromFile(map, filename);
+                return DeserializeFromFile(map, filename, noMessageBox);
             }
             catch (Exception ex)
             {
@@ -215,14 +230,14 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        private PresetsLua? DeserializeFromFile(DcsMaps map, string filename)
+        private PresetsLua? DeserializeFromFile(DcsMaps map, string filename, bool noMessageBox)
         {
             try
             {
                 if (!File.Exists(filename))
                 {
                     s_log.Debug("File not found ({0}). Create a new one.", filename);
-                    return new PresetsLua(map, new Dictionary<string, PresetsLua.Mission>()); 
+                    return new PresetsLua(map, new Dictionary<string, PresetsLua.Mission>());
                 }
 
                 var allText = File.ReadAllText(filename, new UTF8Encoding(false));
@@ -232,7 +247,7 @@ namespace DcsWaypointExporter.Services
                     return null;
                 }
 
-                return DeserializeFromString(map, allText);
+                return DeserializeFromString(map, allText, false);
             }
             catch (Exception ex)
             {
@@ -240,7 +255,7 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        public PresetsLua? DeserializeFromString(DcsMaps map, string allText)
+        public PresetsLua? DeserializeFromString(DcsMaps map, string allText, bool noMessageBox)
         {
             try
             {
@@ -295,6 +310,17 @@ namespace DcsWaypointExporter.Services
                                         var entryKey = matchEntries.Groups[1].Value;
                                         var entryValue = matchEntries.Groups[2].Value;
 
+                                        // Integrity validation
+                                        if (!_expectedKeys.Contains(entryKey))
+                                        {
+                                            if (!noMessageBox)
+                                            {
+                                                System.Windows.MessageBox.Show(CustomResources.Language.EdChangedFileFormat, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                            }
+
+                                            return null;
+                                        }
+
                                         #region function: static dynamic? getDynamic(string value)
                                         static dynamic? getDynamic(string value)
                                         {
@@ -328,6 +354,17 @@ namespace DcsWaypointExporter.Services
                                         Debug.Assert(dynamicValue is not null);
                                         entries.Add(entryKey, dynamicValue);
                                     }
+                                }
+
+                                // Integrity validation
+                                if (entries.Count != EXPECTED_VALUES_COUNT)
+                                {
+                                    if (!noMessageBox)
+                                    {
+                                        System.Windows.MessageBox.Show(CustomResources.Language.EdChangedFileFormat, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                    }
+
+                                    return null;
                                 }
 
                                 waypoints.Add(new PresetsLua.Mission.Waypoint(entries));

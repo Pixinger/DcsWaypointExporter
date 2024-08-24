@@ -258,4 +258,7 @@
   <data name="UpdateAvailable" xml:space="preserve">
     <value>(Update verfügbar)</value>
   </data>
+  <data name="EdChangedFileFormat" xml:space="preserve">
+    <value>ED hat anscheinend das Dateiformat der LUA Datei geändert. Aus Sicherheitsgründen wird die Datei nicht geladen.</value>
+  </data>
 </root>

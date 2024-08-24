@@ -124,6 +124,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ED seems to have changed the LUA file format. For safety reasons the file will not be loaded. ähnelt.
+        /// </summary>
+        public static string EdChangedFileFormat {
+            get {
+                return ResourceManager.GetString("EdChangedFileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error ähnelt.
         /// </summary>
         public static string Error {

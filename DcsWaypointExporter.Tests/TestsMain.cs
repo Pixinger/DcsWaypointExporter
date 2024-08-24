@@ -11,6 +11,8 @@ namespace DcsWaypointExporter.Tests
     public class TestsMain : IClassFixture<DependencyInjectionFixture>
     {
         private const string CAUCASUS_LUA = @".\Data\Caucasus.lua";
+        private const string CAUCASUS_ADDED_LUA = @".\Data\CaucasusAdded.lua";
+        private const string CAUCASUS_MISSING_LUA = @".\Data\CaucasusMissing.lua";
 
         private readonly IServiceProvider _serviceProvider;
 
@@ -128,6 +130,24 @@ namespace DcsWaypointExporter.Tests
                 Assert.Null(map);
                 Assert.Null(mission);
             }
+        }
+
+        [Fact]
+        public void IntegrityVerification_Added()
+        {
+            var allText = File.ReadAllText(CAUCASUS_ADDED_LUA);
+            var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText, true);
+            Assert.Null(presetLua);
+        }
+
+        [Fact]
+        public void IntegrityVerification_Missing()
+        {
+            var allText = File.ReadAllText(CAUCASUS_MISSING_LUA);
+            var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText, true);
+            Assert.Null(presetLua);
         }
     }
 }
