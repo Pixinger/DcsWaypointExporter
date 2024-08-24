@@ -209,9 +209,10 @@ namespace DcsWaypointExporter.ViewModels
 
             if (PresetsLua is not null)
             {
-                foreach (var missionPair in PresetsLua.Missions)
+                var missions = PresetsLua.Missions.Values.OrderBy(x => x.Name);
+                foreach (var mission in missions)
                 {
-                    AvailableMissions.Add(missionPair.Value);
+                    AvailableMissions.Add(mission);
                 }
             }
         }

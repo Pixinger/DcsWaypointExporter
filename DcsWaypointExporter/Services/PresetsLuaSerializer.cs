@@ -107,10 +107,11 @@ namespace DcsWaypointExporter.Services
                 var sb = new StringBuilder();
                 sb.Append("presets = \n");
                 sb.Append("{\n");
-                foreach (var mission in presets.Missions)
+                var sortedMissions = presets.Missions.Values.OrderBy(x => x.Name);
+                foreach (var mission in sortedMissions)
                 {
-                    var name = mission.Key;
-                    var waypoints = mission.Value.Waypoints;
+                    var name = mission.Name;
+                    var waypoints = mission.Waypoints;
 
                     sb.AppendIndent(1);
                     sb.Append(@"[""");
@@ -195,7 +196,7 @@ namespace DcsWaypointExporter.Services
 
                     sb.AppendIndent(1);
                     sb.Append("}, -- end of [\"");
-                    sb.Append(mission.Key);
+                    sb.Append(mission.Name);
                     sb.Append("\"]\n");
 
                 }
