@@ -7,6 +7,10 @@
 # Special treatment for the lua files.
 ###############################################################################
 Caucasus.lua text eol=lf
+CaucasusAdded.lua text eol=lf
+CaucasusMissing.lua text eol=lf
+CaucasusSorted.lua text eol=lf
+CaucasusUnsorted.lua text eol=lf
 
 ###############################################################################
 # Set default behavior for command prompt diff.
