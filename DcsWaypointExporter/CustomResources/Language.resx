@@ -254,6 +254,9 @@ SOFTWARE.</value>
   <data name="Question" xml:space="preserve">
     <value>Question</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -283,6 +286,9 @@ SOFTWARE.</value>
   </data>
   <data name="UnableToGenerateMissionExport" xml:space="preserve">
     <value>Unable generate mission export.</value>
+  </data>
+  <data name="UnableToRenameMission" xml:space="preserve">
+    <value>Unable to rename mission.</value>
   </data>
   <data name="UnableToSaveModifications" xml:space="preserve">
     <value>Unable to save modifications.</value>

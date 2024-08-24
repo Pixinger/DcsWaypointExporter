@@ -145,6 +145,17 @@
                                                 Source="{StaticResource DeleteDrawingImage}" />
                                         </Button>
 
+                                        <!-- Rename Mission -->
+                                        <Button
+                                            Margin="1"
+                                            ToolTip="{x:Static customres:Language.Rename}"
+                                            Command="{Binding ViewModel.CommandRename, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                            CommandParameter="{Binding}">
+                                            <Image
+                                                Style="{StaticResource ItemsControlImage}"
+                                                Source="{StaticResource RenameDrawingImage}" />
+                                        </Button>
+
                                         <!-- Export Mission -->
                                         <Button
                                             Margin="1"

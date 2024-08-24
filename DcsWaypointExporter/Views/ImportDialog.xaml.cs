@@ -18,6 +18,7 @@ namespace DcsWaypointExporter.Views
             InitializeComponent();
         }
 
+
         bool IImportDialogService.Execute(ViewModels.ImportDialog viewModel, out DcsMaps? map, [NotNullWhen(true)] out PresetsLua.Mission? mission)
         {
             DataContext = ViewModel = viewModel;

@@ -261,4 +261,10 @@
   <data name="EdChangedFileFormat" xml:space="preserve">
     <value>ED hat anscheinend das Dateiformat der LUA Datei geändert. Aus Sicherheitsgründen wird die Datei nicht geladen.</value>
   </data>
+  <data name="Rename" xml:space="preserve">
+    <value>Umbenennen</value>
+  </data>
+  <data name="UnableToRenameMission" xml:space="preserve">
+    <value>Die Mission konnte nicht umbenannt werden.</value>
+  </data>
 </root>

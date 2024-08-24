@@ -409,6 +409,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rename ähnelt.
+        /// </summary>
+        public static string Rename {
+            get {
+                return ResourceManager.GetString("Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Save ähnelt.
         /// </summary>
         public static string Save {
@@ -495,6 +504,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string UnableToGenerateMissionExport {
             get {
                 return ResourceManager.GetString("UnableToGenerateMissionExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unable to rename mission. ähnelt.
+        /// </summary>
+        public static string UnableToRenameMission {
+            get {
+                return ResourceManager.GetString("UnableToRenameMission", resourceCulture);
             }
         }
         

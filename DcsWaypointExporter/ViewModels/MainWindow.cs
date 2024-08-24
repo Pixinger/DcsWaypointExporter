@@ -1,10 +1,10 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -404,6 +404,83 @@ namespace DcsWaypointExporter.ViewModels
                 return true;
             });
         private RelayCommand? _commandSave;
+        #endregion
+
+        #region public IRelayCommand CommandRename
+        public IRelayCommand<Models.PresetsLua.Mission> CommandRename => _commandRename ??= new RelayCommand<Models.PresetsLua.Mission>(
+            execute: (mission) =>
+            {
+                if (PresetsLua is null)
+                {
+                    return;
+                }
+
+                if (mission is null)
+                {
+                    return;
+                }
+
+                var editedName = RequiredService<Services.Dialogs.ITextEditDialog>().Execute(new ViewModels.TextEditDialog(mission.Name));
+                if (string.IsNullOrWhiteSpace(editedName))
+                {
+                    return;
+                }
+
+                if (editedName == mission.Name)
+                {
+                    return;
+                }
+
+                if (!PresetsLua.Missions.Remove(mission.Name))
+                {
+                    System.Windows.MessageBox.Show(CustomResources.Language.UnableToRenameMission, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    return;
+                }
+
+                // Change name in case it was used before.
+                #region string getFreeName(string editedName)
+                string getFreeName(string editedName)
+                {
+                    if (!PresetsLua.Missions.ContainsKey(editedName))
+                    {
+                        return editedName;
+                    }
+
+                    var i = 1;
+                    while (true)
+                    {
+                        var name = string.Format("{0}-{1}", editedName, i++);
+                        if (!PresetsLua.Missions.ContainsKey(name))
+                        {
+                            return name;
+                        }
+                    }
+                }
+                #endregion
+                editedName = getFreeName(editedName);
+
+                mission.Name = editedName;
+                PresetsLua.Missions.Add(mission.Name, mission);
+
+                // Update UI
+                UpdateAvailableMissions();
+                IsModified = true;
+            },
+            canExecute: (mission) =>
+            {
+                if (PresetsLua is null)
+                {
+                    return false;
+                }
+
+                if (mission is null)
+                {
+                    return false;
+                }
+
+                return true;
+            });
+        private RelayCommand<Models.PresetsLua.Mission>? _commandRename;
         #endregion
     }
 }
