@@ -169,7 +169,7 @@ namespace DcsWaypointExporter.Services
 
             var subFolders = folderSavedGames.GetDirectories();
 
-            var candidates = subFolders.Where(x => x.Name.Contains(DCS, StringComparison.CurrentCultureIgnoreCase));
+            var candidates = subFolders.Where(x => x.Name.StartsWith(DCS, StringComparison.CurrentCultureIgnoreCase));
             if (candidates is null)
             {
                 s_log.Debug("No subfolders with '{0}' in it's name found.", DCS);
