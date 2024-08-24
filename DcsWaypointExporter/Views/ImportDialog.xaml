@@ -101,10 +101,19 @@
                         Orientation="Horizontal">
                         <TextBlock
                             Style="{StaticResource ImportantTextBlock}"
+                            Text="{Binding MapName}"
+                            d:Text="Map" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="5,3,5,0"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Style="{StaticResource ImportantTextBlock}"
                             Text="{Binding Mission.Name}"
                             d:Text="MyMission" />
                     </StackPanel>
-
+                    
                     <StackPanel
                         Margin="5,0,5,3"
                         Orientation="Horizontal">

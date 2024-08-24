@@ -61,6 +61,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The folder for &apos;c:\users\{username}\saved games\dcs&apos; was not found or it could not be explicit identified. Please specify the folder you this application to use. ähnelt.
+        /// </summary>
+        public static string AutoFolderDialogInfo {
+            get {
+                return ResourceManager.GetString("AutoFolderDialogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Cancel ähnelt.
         /// </summary>
         public static string Cancel {
@@ -115,6 +124,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die ED seems to have changed the LUA file format. For safety reasons the file will not be loaded. ähnelt.
+        /// </summary>
+        public static string EdChangedFileFormat {
+            get {
+                return ResourceManager.GetString("EdChangedFileFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Error ähnelt.
         /// </summary>
         public static string Error {
@@ -129,6 +147,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string Export {
             get {
                 return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Folder setup ähnelt.
+        /// </summary>
+        public static string FolderSetup {
+            get {
+                return ResourceManager.GetString("FolderSetup", resourceCulture);
             }
         }
         
@@ -364,6 +391,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Or specify manually: ähnelt.
+        /// </summary>
+        public static string OrSpecifyManually {
+            get {
+                return ResourceManager.GetString("OrSpecifyManually", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Question ähnelt.
         /// </summary>
         public static string Question {
@@ -378,6 +414,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select auto detected folder: ähnelt.
+        /// </summary>
+        public static string SelectAutoDetectedFolder {
+            get {
+                return ResourceManager.GetString("SelectAutoDetectedFolder", resourceCulture);
             }
         }
         
@@ -459,6 +504,15 @@ namespace DcsWaypointExporter.CustomResources {
         public static string UnableToSaveModifications {
             get {
                 return ResourceManager.GetString("UnableToSaveModifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (Update available) ähnelt.
+        /// </summary>
+        public static string UpdateAvailable {
+            get {
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
         

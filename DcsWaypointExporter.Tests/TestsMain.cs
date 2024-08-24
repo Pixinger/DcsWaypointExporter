@@ -3,15 +3,20 @@
 using System.Collections;
 using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using DcsWaypointExporter.Enums;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DcsWaypointExporter.Tests
 {
-    public class Main : IClassFixture<DependencyInjectionFixture>
+    public class TestsMain : IClassFixture<DependencyInjectionFixture>
     {
+        private const string CAUCASUS_LUA = @".\Data\Caucasus.lua";
+        private const string CAUCASUS_ADDED_LUA = @".\Data\CaucasusAdded.lua";
+        private const string CAUCASUS_MISSING_LUA = @".\Data\CaucasusMissing.lua";
+
         private readonly IServiceProvider _serviceProvider;
 
-        public Main(DependencyInjectionFixture fixture)
+        public TestsMain(DependencyInjectionFixture fixture)
         {
             _serviceProvider = fixture.ServiceProvider;
         }
@@ -36,7 +41,7 @@ namespace DcsWaypointExporter.Tests
             }
 
             var serializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
-            var instance = serializer.DeserializeFromFile_XUnit(filename1);
+            var instance = serializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, filename1);
             Assert.NotNull(instance);
             Assert.True(serializer.SerializeToFile_XUnit(instance, filename2));
             Assert.True(File.Exists(filename2));
@@ -73,10 +78,8 @@ namespace DcsWaypointExporter.Tests
         [Fact(DisplayName = "Mission: Import -> Export cycle")]
         public void MissionImportExportCycle()
         {
-            const string filename1 = @".\Data\Caucasus.lua";
-
             var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
-            var presetLua = presetLuaSerializer.DeserializeFromFile_XUnit(filename1);
+            var presetLua = presetLuaSerializer.DeserializeFromFile_XUnit(DcsMaps.Caucasus, CAUCASUS_LUA);
             Assert.NotNull(presetLua);
 
             var missionSerializer = _serviceProvider.GetRequiredService<Services.IMissionImportExport>();
@@ -86,8 +89,9 @@ namespace DcsWaypointExporter.Tests
                 Assert.NotNull(missionPair.Value);
                 Assert.Equal(missionPair.Key, missionPair.Value.Name);
 
-                var missionText = missionSerializer.Export(missionPair.Value);
-                var missionImported = missionSerializer.Import(missionText);
+                Assert.True(missionSerializer.Export(DcsMaps.Caucasus, missionPair.Value, out var missionText));
+                Assert.True(missionSerializer.Import(missionText, out var mapImported, out var missionImported));
+                Assert.Equal(mapImported, DcsMaps.Caucasus);
 
                 Assert.NotNull(missionImported);
                 Assert.StrictEqual(missionImported.Waypoints.Count, missionPair.Value.Waypoints.Count);
@@ -104,6 +108,46 @@ namespace DcsWaypointExporter.Tests
                     }
                 }
             }
+        }
+
+        [Fact]
+        public void CorruptImportData()
+        {
+            var allText = File.ReadAllText(CAUCASUS_LUA);
+            var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText);
+            Assert.NotNull(presetLua);
+
+            var missionSerializer = _serviceProvider.GetRequiredService<Services.IMissionImportExport>();
+            Assert.True(missionSerializer.Export(DcsMaps.Caucasus, presetLua.Missions.ElementAt(0).Value, out var exportedText));
+
+            const int COUNT = 20;
+            for (int i = 0; i < COUNT; i++)
+            {
+                var position = Random.Shared.Next(0, exportedText.Length - 1);
+                var badText = exportedText.Remove(position, 1);
+                Assert.False(missionSerializer.Import(badText, out var map, out var mission));
+                Assert.Null(map);
+                Assert.Null(mission);
+            }
+        }
+
+        [Fact]
+        public void IntegrityVerification_Added()
+        {
+            var allText = File.ReadAllText(CAUCASUS_ADDED_LUA);
+            var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText, true);
+            Assert.Null(presetLua);
+        }
+
+        [Fact]
+        public void IntegrityVerification_Missing()
+        {
+            var allText = File.ReadAllText(CAUCASUS_MISSING_LUA);
+            var presetLuaSerializer = _serviceProvider.GetRequiredService<Services.IPresetsLuaSerializer>();
+            var presetLua = presetLuaSerializer.DeserializeFromString(DcsMaps.Caucasus, allText, true);
+            Assert.Null(presetLua);
         }
     }
 }

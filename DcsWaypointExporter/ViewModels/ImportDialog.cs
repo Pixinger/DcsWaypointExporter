@@ -6,6 +6,7 @@ using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Models;
 using DcsWaypointExporter.Services;
 
@@ -50,6 +51,37 @@ namespace DcsWaypointExporter.ViewModels
         }
         private PresetsLua.Mission? _mission = null;
 
+        public DcsMaps? Map
+        {
+            get => _map;
+            set
+            {
+                if (SetProperty(ref _map, value))
+                {
+                    CommandOk.NotifyCanExecuteChanged();
+                    OnPropertyChanged(nameof(MapName));
+                }
+            }
+        }
+        private DcsMaps? _map = null;
+        public string MapName
+        {
+            get
+            {
+                if (Map is null)
+                {
+                    return string.Empty;
+                }
+
+                if (DcsMapsTools.TextDictionary.TryGetValue(Map.Value, out var text))
+                {
+                    return text;
+                }
+
+                return string.Empty;
+            }
+        }
+
         private CancellationTokenSource? _debounceTokenSource;
 
 
@@ -71,8 +103,16 @@ namespace DcsWaypointExporter.ViewModels
             {
                 await Task.Delay(DEBOUNCE_TIME_MS, token);
 
-                Mission = ImportService.Import(ImportText);
-                return true; // Executed
+                if (ImportService.Import(ImportText, out var map, out var mission))
+                {
+                    Map = map;
+                    Mission = mission;
+                    return true;
+                }
+
+                Map = null;
+                Mission = null;
+                return false;
             }
             catch (TaskCanceledException)
             {
@@ -142,9 +182,10 @@ namespace DcsWaypointExporter.ViewModels
                         }
 
                         var allText = File.ReadAllText(filename, new UTF8Encoding(false));
-                        var mission = ImportService.Import(allText);
-                        if (mission is null)
+                        if (!ImportService.Import(allText, out var map, out var mission))
                         {
+                            Map = null;
+                            Mission = null;
                             System.Windows.MessageBox.Show(CustomResources.Language.TheFileContainsNoValidMissionData, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                             return;
                         }
@@ -153,6 +194,7 @@ namespace DcsWaypointExporter.ViewModels
                         Debug.Assert(mission is not null, "other wise this bypass would be not allowed.");
                         OnPropertyChanging(nameof(ImportText));
                         _importText = allText;
+                        Map = map;
                         Mission = mission;
                         OnPropertyChanged(nameof(ImportText));
                     }
@@ -177,10 +219,11 @@ namespace DcsWaypointExporter.ViewModels
                     return;
                 }
 
-                var mission = ImportService.Import(allText);
-                if (mission is null)
+                if (!ImportService.Import(allText, out var map, out var mission))
                 {
                     System.Windows.MessageBox.Show(CustomResources.Language.NoValidMissionDataInTheClipboardFound, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    Map = null;
+                    Mission = null;
                     return;
                 }
 
@@ -188,6 +231,7 @@ namespace DcsWaypointExporter.ViewModels
                 Debug.Assert(mission is not null, "other wise this bypass would be not allowed.");
                 OnPropertyChanging(nameof(ImportText));
                 _importText = allText;
+                Map = map;
                 Mission = mission;
                 OnPropertyChanged(nameof(ImportText));
             },

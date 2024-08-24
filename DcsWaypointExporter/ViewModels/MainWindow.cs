@@ -1,12 +1,13 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Models;
 using DcsWaypointExporter.Services;
 using DcsWaypointExporter.Services.Dialogs;
@@ -34,7 +35,7 @@ namespace DcsWaypointExporter.ViewModels
         private IMainThreadInvoker? MainThreadInvoker { get; } = RequiredService<IMainThreadInvoker>();
         #endregion
 
-        public Enums.DcsFiles SelectedMap
+        public Enums.DcsMaps SelectedMap
         {
             get => _selectedMap;
             set
@@ -45,7 +46,7 @@ namespace DcsWaypointExporter.ViewModels
                 }
             }
         }
-        private Enums.DcsFiles _selectedMap = (Enums.DcsFiles)(-1); // This makes the value invalid and therefore it will respond to any setter-value from the CTOR.
+        private Enums.DcsMaps _selectedMap = (Enums.DcsMaps)(-1); // This makes the value invalid and therefore it will respond to any setter-value from the CTOR.
 
         public Models.PresetsLua? PresetsLua
         {
@@ -55,6 +56,7 @@ namespace DcsWaypointExporter.ViewModels
                 if (SetProperty(ref _presetsLua, value))
                 {
                     UpdateAvailableMissions();
+                    CommandImport.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -100,18 +102,30 @@ namespace DcsWaypointExporter.ViewModels
         }
         private string? _productVersion = string.Empty;
 
+        public bool HasUpdate
+        {
+            get => _hasUpdate;
+            set
+            {
+                Debug.Assert(MainThreadInvoker?.CheckAccess() == true, "Only use on UI Thread!");
+                SetProperty(ref _hasUpdate, value);
+            }
+        }
+        private bool _hasUpdate = false;
+
 
         public MainWindow()
         {
             // Make sure we have a valid Saved-Games-Dcs folder detected.
-            var folder = DcsFilesTools.DcsSavedGames;
+            var settings = RequiredService<ISettingsService>();
+            var folder = settings.DcsSavedGames;
             if (string.IsNullOrWhiteSpace(folder))
             {
                 System.Windows.MessageBox.Show(CustomResources.Language.UnableToDetectSavedGamesFolder, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
             else
             {
-                SelectedMap = Enums.DcsFiles.Caucasus;
+                SelectedMap = Enums.DcsMaps.Caucasus;
             }
 
             #region function: static Version getAssemblyVersion()
@@ -174,6 +188,18 @@ namespace DcsWaypointExporter.ViewModels
             }
             #endregion
             ProductVersion = getAssemblyProductVersion();
+
+            #region RequiredService<IUpdateValidationService>().HasUpdateAsync()
+            RequiredService<IUpdateValidationService>().HasUpdateAsync().ContinueWith(
+                (t) =>
+                {
+                    MainThreadInvoker.BeginInvoke(
+                        () =>
+                        {
+                            HasUpdate = t.Result;
+                        });
+                });
+            #endregion
         }
 
 
@@ -213,9 +239,16 @@ namespace DcsWaypointExporter.ViewModels
                 }
 
                 // Import dialog
-                var importedMission = RequiredService<Services.Dialogs.IImportDialogService>().Execute(new ViewModels.ImportDialog());
-                if (importedMission is not null)
+                if (RequiredService<Services.Dialogs.IImportDialogService>().Execute(new ViewModels.ImportDialog(), out var importedMap, out var importedMission))
                 {
+                    // Checnge map if required.
+                    if (importedMap is not null)
+                    {
+                        SelectedMap = importedMap.Value;
+                    }
+
+                    Debug.Assert(SelectedMap == PresetsLua.Map);
+
                     // Change name in case it was used before.
                     #region string getFreeName()
                     string getFreeName()
@@ -274,7 +307,7 @@ namespace DcsWaypointExporter.ViewModels
                     return;
                 }
 
-                RequiredService<IExportDialogService>().Execute(viewModel: new ViewModels.ExportDialog(mission));
+                RequiredService<IExportDialogService>().Execute(viewModel: new ViewModels.ExportDialog(map: SelectedMap, mission: mission));
             },
             canExecute: (mission) =>
             {

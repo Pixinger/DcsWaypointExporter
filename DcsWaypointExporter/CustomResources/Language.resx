@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AutoFolderDialogInfo" xml:space="preserve">
+    <value>The folder for 'c:\users\{username}\saved games\dcs' was not found or it could not be explicit identified. Please specify the folder you this application to use.</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -135,11 +138,17 @@
   <data name="DoYouWantToSaveBeforeExit" xml:space="preserve">
     <value>Do you want to save before exit?</value>
   </data>
+  <data name="EdChangedFileFormat" xml:space="preserve">
+    <value>ED seems to have changed the LUA file format. For safety reasons the file will not be loaded.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>Export</value>
+  </data>
+  <data name="FolderSetup" xml:space="preserve">
+    <value>Folder setup</value>
   </data>
   <data name="FromClipboard" xml:space="preserve">
     <value>From Clipboard</value>
@@ -239,11 +248,17 @@ SOFTWARE.</value>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="OrSpecifyManually" xml:space="preserve">
+    <value>Or specify manually:</value>
+  </data>
   <data name="Question" xml:space="preserve">
     <value>Question</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SelectAutoDetectedFolder" xml:space="preserve">
+    <value>Select auto detected folder:</value>
   </data>
   <data name="TheClipboardContentSeemsToBeToLarge_UnableToOpenContentLargerThan_ARG0_Mb" xml:space="preserve">
     <value>The clipboard content seems to be to large. Unable to open content larger than {0} MB.</value>
@@ -271,6 +286,9 @@ SOFTWARE.</value>
   </data>
   <data name="UnableToSaveModifications" xml:space="preserve">
     <value>Unable to save modifications.</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>(Update available)</value>
   </data>
   <data name="Waypoints" xml:space="preserve">
     <value>Waypoints</value>

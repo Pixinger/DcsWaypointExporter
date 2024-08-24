@@ -11,9 +11,17 @@
 
   <ItemGroup>
     <None Remove="Data\Caucasus.lua" />
+    <None Remove="Data\CaucasusAdded.lua" />
+    <None Remove="Data\CaucasusMissing.lua" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\CaucasusMissing.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\CaucasusAdded.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Caucasus.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

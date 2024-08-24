@@ -1,0 +1,111 @@
+﻿<Window
+    x:Class="DcsWaypointExporter.Views.FolderSetupDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:DcsWaypointExporter.Views"
+    xmlns:customres="clr-namespace:DcsWaypointExporter.CustomResources"
+    xmlns:viewmodels="clr-namespace:DcsWaypointExporter.ViewModels"
+    mc:Ignorable="d"
+    Title="{x:Static customres:Language.FolderSetup}"
+    SizeToContent="WidthAndHeight"
+    MaxWidth="400"
+    d:DataContext="{d:DesignInstance {x:Type viewmodels:FolderSetupDialog}, IsDesignTimeCreatable=false}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- TextBlock with Informations -->
+        <StackPanel
+            Margin="10,10,10,0"
+            Grid.Row="0">
+            <TextBlock
+                TextWrapping="WrapWithOverflow"
+                Text="{x:Static customres:Language.AutoFolderDialogInfo}">
+            </TextBlock>
+        </StackPanel>
+
+        <!-- Combobox -->
+        <StackPanel
+            Margin="10,0,10,0"
+            Orientation="Vertical"
+            Grid.Row="1">
+            <Label
+                FontStyle="Italic"
+                Content="{x:Static customres:Language.SelectAutoDetectedFolder}" />
+            <ComboBox
+                SelectedValue="{Binding Fullname, Mode=TwoWay}"
+                ItemsSource="{Binding PossibleCandidates}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock
+                                Text="{Binding}">
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Fullname -->
+        <StackPanel
+            Margin="10,0,10,0"
+            Grid.Row="2">
+            <Label
+                FontStyle="Italic"
+                Content="{x:Static customres:Language.OrSpecifyManually}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="1*" />
+                    <ColumnDefinition
+                        Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    Grid.Column="0"
+                    Text="{Binding Fullname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
+                <Button
+                    Margin="3,0,0,0"
+                    Width="40"
+                    Content="..."
+                    Grid.Column="1">
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <!-- CLOSE Button -->
+        <UniformGrid
+            Width="300"
+            Grid.Row="3"
+            Columns="2">
+            <Button
+                Margin="10"
+                MinWidth="75"
+                Content="{x:Static customres:Language.Ok}"
+                IsDefault="True"
+                Command="{Binding CommandOk}" />
+            <Button
+                Margin="10"
+                MinWidth="75"
+                Content="{x:Static customres:Language.Cancel}"
+                IsCancel="True"
+                Command="{Binding CommandCancel}" />
+        </UniformGrid>
+    </Grid>
+</Window>

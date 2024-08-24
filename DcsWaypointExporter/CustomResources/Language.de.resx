@@ -133,7 +133,7 @@
     <value>DCS-Waypoint-Export Datei (*.dwe)|*.dwe|Alle Dateien (*.*)|*.*</value>
   </data>
   <data name="DoYouWantToSaveBeforeExit" xml:space="preserve">
-    <value>Wollen sie vor dem Beendet noch speichern?</value>
+    <value>Wollen sie vor dem Beenden noch speichern?</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler</value>
@@ -242,5 +242,23 @@
   </data>
   <data name="Map_MarianaIslands" xml:space="preserve">
     <value>Mariannen Inseln</value>
+  </data>
+  <data name="FolderSetup" xml:space="preserve">
+    <value>Verzeichnis Einstellung</value>
+  </data>
+  <data name="AutoFolderDialogInfo" xml:space="preserve">
+    <value>Der Ordner für 'c:\users\{username}\saved games\dcs' konnte nicht oder nicht eindeutig gefunden werden. Bitte legen sie den Ordner der von dieser Anwendung verwendet werden soll fest.</value>
+  </data>
+  <data name="OrSpecifyManually" xml:space="preserve">
+    <value>Oder lege es manuell fest:</value>
+  </data>
+  <data name="SelectAutoDetectedFolder" xml:space="preserve">
+    <value>Wähle ein automatisch erkanntes Verzeichnis:</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>(Update verfügbar)</value>
+  </data>
+  <data name="EdChangedFileFormat" xml:space="preserve">
+    <value>ED hat anscheinend das Dateiformat der LUA Datei geändert. Aus Sicherheitsgründen wird die Datei nicht geladen.</value>
   </data>
 </root>

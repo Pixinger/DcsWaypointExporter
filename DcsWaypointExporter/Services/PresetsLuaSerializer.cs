@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Extensions;
 using DcsWaypointExporter.Models;
@@ -18,12 +19,27 @@ namespace DcsWaypointExporter.Services
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
         #endregion
 
+        #region private static readonly List<string> _expectedKeys
+        private static readonly List<string> _expectedKeys = new List<string>([
+            "speed_locked",
+            "type",
+            "action",
+            "ETA_locked",
+            "x",
+            "y",
+            "name",
+            "alt",
+            "alt_type",
+            "ETA"]);
+        #endregion
+        private const int EXPECTED_VALUES_COUNT = 10;
+
         public bool SerializeToFile_XUnit(PresetsLua presets, string filename) => SerializeToFile(presets, filename);
-        public bool SerializeToFile(PresetsLua presets, DcsFiles file)
+        public bool SerializeToFile(PresetsLua presets, DcsMaps file)
         {
             try
             {
-                var filename = DcsFilesTools.GetFullFilename(file);
+                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(file);
                 if (filename is null)
                 {
                     s_log.Error("Unable to get filename for file {0}", file);
@@ -194,19 +210,19 @@ namespace DcsWaypointExporter.Services
             }
         }
 
-        public PresetsLua? DeserializeFromFile_XUnit(string filename) => DeserializeFromFile(filename);
-        public PresetsLua? DeserializeFromFile(DcsFiles file)
+        public PresetsLua? DeserializeFromFile_XUnit(DcsMaps map, string filename) => DeserializeFromFile(map, filename, true);
+        public PresetsLua? DeserializeFromFile(DcsMaps map, bool noMessageBox)
         {
             try
             {
-                var filename = DcsFilesTools.GetFullFilename(file);
+                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(map);
                 if (filename is null)
                 {
-                    s_log.Error("Unable to get filename for file {0}", file);
+                    s_log.Error("Unable to get filename for file {0}", map);
                     return null;
                 }
 
-                return DeserializeFromFile(filename);
+                return DeserializeFromFile(map, filename, noMessageBox);
             }
             catch (Exception ex)
             {
@@ -214,14 +230,14 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        private PresetsLua? DeserializeFromFile(string filename)
+        private PresetsLua? DeserializeFromFile(DcsMaps map, string filename, bool noMessageBox)
         {
             try
             {
                 if (!File.Exists(filename))
                 {
-                    s_log.Error("File not found ({0}).", filename);
-                    return null;
+                    s_log.Debug("File not found ({0}). Create a new one.", filename);
+                    return new PresetsLua(map, new Dictionary<string, PresetsLua.Mission>());
                 }
 
                 var allText = File.ReadAllText(filename, new UTF8Encoding(false));
@@ -231,7 +247,7 @@ namespace DcsWaypointExporter.Services
                     return null;
                 }
 
-                return DeserializeFromString(allText);
+                return DeserializeFromString(map, allText, false);
             }
             catch (Exception ex)
             {
@@ -239,7 +255,7 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        public PresetsLua? DeserializeFromString(string allText)
+        public PresetsLua? DeserializeFromString(DcsMaps map, string allText, bool noMessageBox)
         {
             try
             {
@@ -294,6 +310,17 @@ namespace DcsWaypointExporter.Services
                                         var entryKey = matchEntries.Groups[1].Value;
                                         var entryValue = matchEntries.Groups[2].Value;
 
+                                        // Integrity validation
+                                        if (!_expectedKeys.Contains(entryKey))
+                                        {
+                                            if (!noMessageBox)
+                                            {
+                                                System.Windows.MessageBox.Show(CustomResources.Language.EdChangedFileFormat, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                            }
+
+                                            return null;
+                                        }
+
                                         #region function: static dynamic? getDynamic(string value)
                                         static dynamic? getDynamic(string value)
                                         {
@@ -329,6 +356,17 @@ namespace DcsWaypointExporter.Services
                                     }
                                 }
 
+                                // Integrity validation
+                                if (entries.Count != EXPECTED_VALUES_COUNT)
+                                {
+                                    if (!noMessageBox)
+                                    {
+                                        System.Windows.MessageBox.Show(CustomResources.Language.EdChangedFileFormat, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                    }
+
+                                    return null;
+                                }
+
                                 waypoints.Add(new PresetsLua.Mission.Waypoint(entries));
                             }
                         }
@@ -337,7 +375,7 @@ namespace DcsWaypointExporter.Services
                     }
                 }
 
-                return new PresetsLua(missions);
+                return new PresetsLua(map, missions);
             }
             catch (Exception ex)
             {

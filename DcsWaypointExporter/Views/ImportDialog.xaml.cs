@@ -1,6 +1,8 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
+using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Models;
 using DcsWaypointExporter.Services.Dialogs;
 
@@ -16,8 +18,7 @@ namespace DcsWaypointExporter.Views
             InitializeComponent();
         }
 
-
-        PresetsLua.Mission? IImportDialogService.Execute(ViewModels.ImportDialog viewModel)
+        bool IImportDialogService.Execute(ViewModels.ImportDialog viewModel, out DcsMaps? map, [NotNullWhen(true)] out PresetsLua.Mission? mission)
         {
             DataContext = ViewModel = viewModel;
             ViewModel.Close += OnViewModel_Close;
@@ -25,13 +26,17 @@ namespace DcsWaypointExporter.Views
             Owner = Application.Current.MainWindow;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
 
-            if (ShowDialog() == true)
+            if ((ShowDialog() == true) && (ViewModel.Mission is not null))
             {
-                return ViewModel.Mission;
+                map = viewModel.Map;
+                mission = ViewModel.Mission;
+                return true;
             }
             else
             {
-                return null;
+                map = null;
+                mission = null;
+                return false;
             }
         }
 
