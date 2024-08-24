@@ -157,6 +157,13 @@ namespace DcsWaypointExporter.Services
                 }
 
                 s_log.Debug("appsettings.json specified a custom folder: {0}", cfgFolder);
+
+                if (!Directory.Exists(cfgFolder))
+                {
+                    s_log.Error("appsettings.json specified a non existent custom folder: {0}", cfgFolder);
+                    return null;
+                }
+
                 return cfgFolder;
             }
 
