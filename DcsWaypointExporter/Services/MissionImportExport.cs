@@ -6,7 +6,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
 using DcsWaypointExporter.Enums;
-using DcsWaypointExporter.Models;
 
 namespace DcsWaypointExporter.Services
 {

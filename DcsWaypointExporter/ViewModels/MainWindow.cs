@@ -1,6 +1,5 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;

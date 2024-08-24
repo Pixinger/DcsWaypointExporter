@@ -1,11 +1,6 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
-#if (DEBUG)
-#define SUPPRESS_UPDATE_REQUEST
-#endif
 
-using System.IO;
 using System.Net.Http;
-using System.Reflection;
 using System.Text.Json;
 
 namespace DcsWaypointExporter.Services
@@ -16,12 +11,9 @@ namespace DcsWaypointExporter.Services
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
         #endregion
 
+
         public async Task<bool> HasUpdateAsync()
         {
-#if (SUPPRESS_UPDATE_REQUEST)
-            await Task.Delay(100);
-            return false;
-#else
             try
             {
                 const string owner = "Pixinger";
@@ -88,6 +80,7 @@ namespace DcsWaypointExporter.Services
                         s_log.Info("ERROR(debug): getAssemblyVersion() failed.");
                         return false;
                     }
+                    #region getAssemblyProductVersion ??
                     //#region static string? getAssemblyProductVersion()
                     //static string? getAssemblyProductVersion()
                     //{
@@ -120,6 +113,7 @@ namespace DcsWaypointExporter.Services
                     //    s_log.Info("ERROR(debug): getAssemblyProductVersion() failed.");
                     //    return false;
                     //}
+                    #endregion
 
                     var hasUpdate = "v" + localVersion.ToString() != remoteProductVersion;
                     s_log.Info("HasUpdate: {0}", hasUpdate);
@@ -131,7 +125,6 @@ namespace DcsWaypointExporter.Services
                 s_log.Error(ex, "Unexpected exception.");
                 return false;
             }
-#endif
         }
     }
 }

@@ -3,7 +3,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Extensions;
