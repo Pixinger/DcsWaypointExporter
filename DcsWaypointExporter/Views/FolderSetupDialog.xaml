@@ -84,6 +84,7 @@
                     Margin="3,0,0,0"
                     Width="40"
                     Content="..."
+                    Command="{Binding CommandBrowse}"
                     Grid.Column="1">
                 </Button>
             </Grid>

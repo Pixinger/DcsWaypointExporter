@@ -115,5 +115,26 @@ namespace DcsWaypointExporter.ViewModels
             });
         private RelayCommand? _commandCancel;
         #endregion
+
+        #region public IRelayCommand CommandBrowse
+        public IRelayCommand CommandBrowse => _commandBrowse ??= new RelayCommand(
+            execute: () =>
+            {
+                var folderSavedGames = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), SAVED_GAMES);
+
+                var dialog = new Microsoft.Win32.OpenFolderDialog();
+                dialog.InitialDirectory = folderSavedGames;
+                if (dialog.ShowDialog() == true)
+                {
+                    Fullname = dialog.FolderName;
+                }
+                dialog.Reset();
+            },
+            canExecute: () =>
+            {
+                return true;
+            });
+        private RelayCommand? _commandBrowse;
+        #endregion
     }
 }
