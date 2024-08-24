@@ -1,7 +1,7 @@
 <Project>
   <!-- DO MODIFY: -->
   <PropertyGroup>
-    <PixVersionSuffix>1.0.1</PixVersionSuffix>
+    <PixVersionSuffix>1.1.0.0</PixVersionSuffix>
     <PixVersionExtension></PixVersionExtension>
     <!--PixVersionExtension: could be "-alpha1"-->
     <PixProduct>DCS Waypoint Exporter</PixProduct>

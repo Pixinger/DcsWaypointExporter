@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace DcsWaypointExporter.Services
 {
-    public class UpdateValidationService: IUpdateValidationService
+    public class UpdateValidationService : IUpdateValidationService
     {
         #region nLog instance (s_log)
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
@@ -51,40 +51,77 @@ namespace DcsWaypointExporter.Services
                         return false;
                     }
 
-                    #region static string? getAssemblyProductVersion()
-                    static string? getAssemblyProductVersion()
+                    #region function: static Version getAssemblyVersion()
+                    static Version getAssemblyVersion()
                     {
-                        var assemblyPath = Assembly.GetEntryAssembly()?.Location;
-                        if (assemblyPath is null)
-                        {
-                            return null;
-                        }
-
-                        var filename = new FileInfo(assemblyPath).FullName;
-                        if (!System.IO.File.Exists(filename))
-                        {
-                            return null;
-                        }
-
                         try
                         {
-                            var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(filename);
-                            return fileVersionInfo.ProductVersion;
+                            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                            if (assembly is null)
+                            {
+                                return new Version();
+                            }
+
+                            var name = assembly.GetName();
+                            if (name is null)
+                            {
+                                return new Version();
+                            }
+
+                            var version = name.Version;
+                            if (version is null)
+                            {
+                                return new Version();
+                            }
+
+                            return (Version)version.Clone();
                         }
                         catch
                         {
-                            return null;
+                            return new Version();
                         }
                     }
                     #endregion
-                    var locaProductVersion = getAssemblyProductVersion();
-                    if (locaProductVersion is null)
+                    var localVersion = getAssemblyVersion();
+                    if (localVersion is null)
                     {
-                        s_log.Info("ERROR(debug): getAssemblyProductVersion() failed.");
+                        s_log.Info("ERROR(debug): getAssemblyVersion() failed.");
                         return false;
                     }
+                    //#region static string? getAssemblyProductVersion()
+                    //static string? getAssemblyProductVersion()
+                    //{
+                    //    var assemblyPath = Assembly.GetEntryAssembly()?.Location;
+                    //    if (assemblyPath is null)
+                    //    {
+                    //        return null;
+                    //    }
 
-                    var hasUpdate = locaProductVersion != remoteProductVersion;
+                    //    var filename = new FileInfo(assemblyPath).FullName;
+                    //    if (!System.IO.File.Exists(filename))
+                    //    {
+                    //        return null;
+                    //    }
+
+                    //    try
+                    //    {
+                    //        var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(filename);
+                    //        return fileVersionInfo.ProductVersion;
+                    //    }
+                    //    catch
+                    //    {
+                    //        return null;
+                    //    }
+                    //}
+                    //#endregion
+                    //var locaProductVersion = getAssemblyProductVersion();
+                    //if (locaProductVersion is null)
+                    //{
+                    //    s_log.Info("ERROR(debug): getAssemblyProductVersion() failed.");
+                    //    return false;
+                    //}
+
+                    var hasUpdate = "v" + localVersion.ToString() != remoteProductVersion;
                     s_log.Info("HasUpdate: {0}", hasUpdate);
                     return hasUpdate;
                 }
