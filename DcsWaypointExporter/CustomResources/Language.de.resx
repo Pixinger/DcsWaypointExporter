@@ -255,4 +255,7 @@
   <data name="SelectAutoDetectedFolder" xml:space="preserve">
     <value>Wähle ein automatisch erkanntes Verzeichnis:</value>
   </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>(Update verfügbar)</value>
+  </data>
 </root>

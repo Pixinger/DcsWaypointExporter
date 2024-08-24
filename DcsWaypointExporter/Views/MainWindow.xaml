@@ -36,6 +36,8 @@
             Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
                     Width="1*" />
                 <ColumnDefinition
                     Width="Auto" />
@@ -46,15 +48,21 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                Grid.Row="0"
                 Grid.Column="0"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Foreground="Red"
+                FontWeight="Bold"
+                Visibility="{Binding HasUpdate, Converter={StaticResource BooleanToVisibility}}"
+                Text="{x:Static customres:Language.UpdateAvailable}" />
+            <TextBlock
+                Grid.Column="1"
                 Margin="5,0,0,0"
                 d:Text="Vx.y.z.a"
                 VerticalAlignment="Center"
                 Text="{Binding Version}" />
             <Button
-                Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="2"
                 Margin="0,0,5,0"
                 ToolTip="{x:Static customres:Language.Info}"
                 Command="{Binding ViewModel.CommandInfo, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"

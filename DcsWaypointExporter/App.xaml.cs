@@ -90,6 +90,7 @@ namespace DcsWaypointExporter
             services.AddSingleton<Services.IMissionImportExport, Services.MissionImportExport>();
             services.AddSingleton<Services.IPresetsLuaSerializer, Services.PresetsLuaSerializer>();
             services.AddSingleton<Services.ISettingsService, Services.SettingsService>();
+            services.AddSingleton<Services.IUpdateValidationService, Services.UpdateValidationService>();
 
             services.AddTransient<Services.Dialogs.IImportDialogService, Views.ImportDialog>();
             services.AddTransient<Services.Dialogs.IExportDialogService, Views.ExportDialog>();

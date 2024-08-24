@@ -18,6 +18,8 @@
                 <ResourceDictionary>
                     <converters:NullObjectToVisibilityConverter
                         x:Key="NullObjectToVisibility" />
+                    <BooleanToVisibilityConverter
+                        x:Key="BooleanToVisibility" />
                 </ResourceDictionary>
 
                 <!-- Styles -->

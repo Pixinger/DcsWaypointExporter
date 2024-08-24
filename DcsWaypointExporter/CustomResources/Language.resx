@@ -284,6 +284,9 @@ SOFTWARE.</value>
   <data name="UnableToSaveModifications" xml:space="preserve">
     <value>Unable to save modifications.</value>
   </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>(Update available)</value>
+  </data>
   <data name="Waypoints" xml:space="preserve">
     <value>Waypoints</value>
   </data>

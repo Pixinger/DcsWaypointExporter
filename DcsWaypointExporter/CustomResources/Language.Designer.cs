@@ -499,6 +499,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (Update available) ähnelt.
+        /// </summary>
+        public static string UpdateAvailable {
+            get {
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Waypoints ähnelt.
         /// </summary>
         public static string Waypoints {

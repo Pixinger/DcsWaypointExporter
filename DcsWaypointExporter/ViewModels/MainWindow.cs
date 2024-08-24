@@ -1,12 +1,13 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
-using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Models;
 using DcsWaypointExporter.Services;
 using DcsWaypointExporter.Services.Dialogs;
@@ -100,6 +101,17 @@ namespace DcsWaypointExporter.ViewModels
         }
         private string? _productVersion = string.Empty;
 
+        public bool HasUpdate
+        {
+            get => _hasUpdate;
+            set
+            {
+                Debug.Assert(MainThreadInvoker?.CheckAccess() == true, "Only use on UI Thread!");
+                SetProperty(ref _hasUpdate, value);
+            }
+        }
+        private bool _hasUpdate = false;
+
 
         public MainWindow()
         {
@@ -175,6 +187,18 @@ namespace DcsWaypointExporter.ViewModels
             }
             #endregion
             ProductVersion = getAssemblyProductVersion();
+
+            #region RequiredService<IUpdateValidationService>().HasUpdateAsync()
+            RequiredService<IUpdateValidationService>().HasUpdateAsync().ContinueWith(
+                (t) =>
+                {
+                    MainThreadInvoker.BeginInvoke(
+                        () =>
+                        {
+                            HasUpdate = t.Result;
+                        });
+                });
+            #endregion
         }
 
 
