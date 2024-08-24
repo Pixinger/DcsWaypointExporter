@@ -204,10 +204,10 @@ namespace DcsWaypointExporter.Services
             return detectedFolder;
         }
 
-        /// <inheritdoc cref="ISettingsService.GetFullFilename(DcsFiles)"/><summary>
-        public string? GetFullFilename(DcsFiles file)
+        /// <inheritdoc cref="ISettingsService.GetFullFilename(DcsMaps)"/><summary>
+        public string? GetFullFilename(DcsMaps file)
         {
-            if (!Enums.DcsFilesTools.FilenameDictionary.TryGetValue(file, out var result))
+            if (!Enums.DcsMapsTools.FilenameDictionary.TryGetValue(file, out var result))
             {
                 return null;
             }

@@ -20,7 +20,7 @@ namespace DcsWaypointExporter.Services
         #endregion
 
         public bool SerializeToFile_XUnit(PresetsLua presets, string filename) => SerializeToFile(presets, filename);
-        public bool SerializeToFile(PresetsLua presets, DcsFiles file)
+        public bool SerializeToFile(PresetsLua presets, DcsMaps file)
         {
             try
             {
@@ -195,19 +195,19 @@ namespace DcsWaypointExporter.Services
             }
         }
 
-        public PresetsLua? DeserializeFromFile_XUnit(string filename) => DeserializeFromFile(filename);
-        public PresetsLua? DeserializeFromFile(DcsFiles file)
+        public PresetsLua? DeserializeFromFile_XUnit(DcsMaps map, string filename) => DeserializeFromFile(map, filename);
+        public PresetsLua? DeserializeFromFile(DcsMaps map)
         {
             try
             {
-                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(file);
+                var filename = Ioc.Default.GetRequiredService<ISettingsService>().GetFullFilename(map);
                 if (filename is null)
                 {
-                    s_log.Error("Unable to get filename for file {0}", file);
+                    s_log.Error("Unable to get filename for file {0}", map);
                     return null;
                 }
 
-                return DeserializeFromFile(filename);
+                return DeserializeFromFile(map, filename);
             }
             catch (Exception ex)
             {
@@ -215,14 +215,14 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        private PresetsLua? DeserializeFromFile(string filename)
+        private PresetsLua? DeserializeFromFile(DcsMaps map, string filename)
         {
             try
             {
                 if (!File.Exists(filename))
                 {
-                    s_log.Error("File not found ({0}).", filename);
-                    return null;
+                    s_log.Debug("File not found ({0}). Create a new one.", filename);
+                    return new PresetsLua(map, new Dictionary<string, PresetsLua.Mission>()); 
                 }
 
                 var allText = File.ReadAllText(filename, new UTF8Encoding(false));
@@ -232,7 +232,7 @@ namespace DcsWaypointExporter.Services
                     return null;
                 }
 
-                return DeserializeFromString(allText);
+                return DeserializeFromString(map, allText);
             }
             catch (Exception ex)
             {
@@ -240,7 +240,7 @@ namespace DcsWaypointExporter.Services
                 return null;
             }
         }
-        public PresetsLua? DeserializeFromString(string allText)
+        public PresetsLua? DeserializeFromString(DcsMaps map, string allText)
         {
             try
             {
@@ -338,7 +338,7 @@ namespace DcsWaypointExporter.Services
                     }
                 }
 
-                return new PresetsLua(missions);
+                return new PresetsLua(map, missions);
             }
             catch (Exception ex)
             {

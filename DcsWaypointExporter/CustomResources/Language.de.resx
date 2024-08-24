@@ -133,7 +133,7 @@
     <value>DCS-Waypoint-Export Datei (*.dwe)|*.dwe|Alle Dateien (*.*)|*.*</value>
   </data>
   <data name="DoYouWantToSaveBeforeExit" xml:space="preserve">
-    <value>Wollen sie vor dem Beendet noch speichern?</value>
+    <value>Wollen sie vor dem Beenden noch speichern?</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler</value>

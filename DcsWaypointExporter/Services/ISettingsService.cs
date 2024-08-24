@@ -18,6 +18,6 @@ namespace DcsWaypointExporter.Services
         /// Warning: The file is not guaranteed to exists!
         /// </remarks>
         /// <returns>The full filename or <see langword="null"/> if it was not possible to calculate the filename.</returns>
-        string? GetFullFilename(DcsFiles file);
+        string? GetFullFilename(DcsMaps file);
     }
 }

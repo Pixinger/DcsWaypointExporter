@@ -1,5 +1,7 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
+using DcsWaypointExporter.Enums;
+
 namespace DcsWaypointExporter.Models
 {
     public class PresetsLua
@@ -32,9 +34,11 @@ namespace DcsWaypointExporter.Models
         #endregion
 
         public Dictionary<string, Mission> Missions { get; }
+        public DcsMaps Map { get; }
 
-        public PresetsLua(Dictionary<string, Mission> missions)
+        public PresetsLua(DcsMaps map, Dictionary<string, Mission> missions)
         {
+            Map = map;
             Missions = missions;
         }
     }

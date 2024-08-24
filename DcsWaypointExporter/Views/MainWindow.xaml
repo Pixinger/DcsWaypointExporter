@@ -90,7 +90,7 @@
                     Margin="0,0,0,5"
                     SelectedValuePath="Key"
                     SelectedValue="{Binding SelectedMap}"
-                    ItemsSource="{Binding Source={x:Static enums:DcsFilesTools.TextDictionary}}">
+                    ItemsSource="{Binding Source={x:Static enums:DcsMapsTools.TextDictionary}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>

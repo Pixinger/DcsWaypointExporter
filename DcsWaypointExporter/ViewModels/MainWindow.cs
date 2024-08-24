@@ -35,7 +35,7 @@ namespace DcsWaypointExporter.ViewModels
         private IMainThreadInvoker? MainThreadInvoker { get; } = RequiredService<IMainThreadInvoker>();
         #endregion
 
-        public Enums.DcsFiles SelectedMap
+        public Enums.DcsMaps SelectedMap
         {
             get => _selectedMap;
             set
@@ -46,7 +46,7 @@ namespace DcsWaypointExporter.ViewModels
                 }
             }
         }
-        private Enums.DcsFiles _selectedMap = (Enums.DcsFiles)(-1); // This makes the value invalid and therefore it will respond to any setter-value from the CTOR.
+        private Enums.DcsMaps _selectedMap = (Enums.DcsMaps)(-1); // This makes the value invalid and therefore it will respond to any setter-value from the CTOR.
 
         public Models.PresetsLua? PresetsLua
         {
@@ -56,6 +56,7 @@ namespace DcsWaypointExporter.ViewModels
                 if (SetProperty(ref _presetsLua, value))
                 {
                     UpdateAvailableMissions();
+                    CommandImport.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -124,7 +125,7 @@ namespace DcsWaypointExporter.ViewModels
             }
             else
             {
-                SelectedMap = Enums.DcsFiles.Caucasus;
+                SelectedMap = Enums.DcsMaps.Caucasus;
             }
 
             #region function: static Version getAssemblyVersion()
@@ -238,9 +239,16 @@ namespace DcsWaypointExporter.ViewModels
                 }
 
                 // Import dialog
-                var importedMission = RequiredService<Services.Dialogs.IImportDialogService>().Execute(new ViewModels.ImportDialog());
-                if (importedMission is not null)
+                if (RequiredService<Services.Dialogs.IImportDialogService>().Execute(new ViewModels.ImportDialog(), out var importedMap, out var importedMission))
                 {
+                    // Checnge map if required.
+                    if (importedMap is not null)
+                    {
+                        SelectedMap = importedMap.Value;
+                    }
+
+                    Debug.Assert(SelectedMap == PresetsLua.Map);
+
                     // Change name in case it was used before.
                     #region string getFreeName()
                     string getFreeName()
@@ -299,7 +307,7 @@ namespace DcsWaypointExporter.ViewModels
                     return;
                 }
 
-                RequiredService<IExportDialogService>().Execute(viewModel: new ViewModels.ExportDialog(mission));
+                RequiredService<IExportDialogService>().Execute(viewModel: new ViewModels.ExportDialog(map: SelectedMap, mission: mission));
             },
             canExecute: (mission) =>
             {

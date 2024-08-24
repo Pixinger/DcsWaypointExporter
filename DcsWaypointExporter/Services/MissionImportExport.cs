@@ -1,9 +1,12 @@
 ﻿// Copyright© 2024 / pixinger@github / MIT License https://choosealicense.com/licenses/mit/
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
+using DcsWaypointExporter.Enums;
+using DcsWaypointExporter.Models;
 
 namespace DcsWaypointExporter.Services
 {
@@ -13,11 +16,13 @@ namespace DcsWaypointExporter.Services
         private static NLog.Logger s_log { get; } = NLog.LogManager.GetCurrentClassLogger();
         #endregion
 
-        public Models.PresetsLua.Mission? Import(string? importedText)
+        public bool Import(string? importedText, out DcsMaps? map, [NotNullWhen(true)] out Models.PresetsLua.Mission? mission)
         {
             if (string.IsNullOrWhiteSpace(importedText))
             {
-                return null;
+                map = null;
+                mission = null;
+                return false;
             }
 
             try
@@ -51,19 +56,41 @@ namespace DcsWaypointExporter.Services
                 var allLines = decompressBuffer(compresedBytes);
                 Debug.Write(allLines);
 
-                #region function: Models.PresetsLua.Mission? parseJson(string jsonText)
-                Models.PresetsLua.Mission? parseJson(string jsonText)
+                #region function: bool parseJson(string jsonText, out DcsMaps? map, out Models.PresetsLua.Mission? mission)
+                bool parseJson(string jsonText, out DcsMaps? map, out Models.PresetsLua.Mission? mission)
                 {
+
                     using (var jsonDoc = JsonDocument.Parse(jsonText))
                     {
                         var jsonRoot = jsonDoc.RootElement;
+
+                        // Try to read map if available.
+                        var mapText = jsonRoot.GetProperty("Map").GetString();
+                        if (mapText is not null)
+                        {
+                            try
+                            {
+                                map = Enum.Parse<DcsMaps>(mapText);
+                            }
+                            catch (Exception ex)
+                            {
+                                s_log.Error(ex, "Enum.Parse<DcsMaps>(mapText)");
+                                map = null;
+                            }
+                        }
+                        else
+                        {
+                            map = null;
+                        }
+
 
                         // Zugriff auf einzelne Elemente
                         var missionName = jsonRoot.GetProperty("Name").GetString();
                         if (missionName is null)
                         {
                             s_log.Error("Unable to read 'Name' element.");
-                            return null;
+                            mission = null;
+                            return false;
                         }
 
                         var jsonWaypoints = jsonRoot.GetProperty("Waypoints");
@@ -82,7 +109,8 @@ namespace DcsWaypointExporter.Services
                                     if (s is null)
                                     {
                                         s_log.Error("Unable to convert json entry: {0}", jsonEntryProperty.Name);
-                                        return null;
+                                        mission = null;
+                                        return false;
                                     }
 
                                     entries.Add(jsonEntryProperty.Name, (dynamic)s);
@@ -104,19 +132,22 @@ namespace DcsWaypointExporter.Services
                             waypoints.Add(new Models.PresetsLua.Mission.Waypoint(entries));
                         }
 
-                        return new Models.PresetsLua.Mission(missionName, waypoints);
+                        mission = new Models.PresetsLua.Mission(missionName, waypoints);
+                        return true;
                     }
                 }
                 #endregion
-                return parseJson(allLines);
+                return parseJson(allLines, out map, out mission);
             }
             catch (Exception ex)
             {
                 s_log.Error(ex, "Unexpected exception.");
-                return null;
+                map = null;
+                mission = null;
+                return false;
             }
         }
-        public string? Export(Models.PresetsLua.Mission mission)
+        public bool Export(DcsMaps map, Models.PresetsLua.Mission mission, [NotNullWhen(true)] out string? exportedText)
         {
             try
             {
@@ -133,6 +164,8 @@ namespace DcsWaypointExporter.Services
                         using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = indented }))
                         {
                             writer.WriteStartObject();
+                            // Custom JSON OBJECT TO IDENTIFY THE MAP
+                            writer.WriteString("Map", map.ToString());
                             writer.WriteString("Name", mission.Name);
                             writer.WriteStartObject("Waypoints");
                             var waypoints = mission.Waypoints;
@@ -187,14 +220,17 @@ namespace DcsWaypointExporter.Services
                         return Convert.ToBase64String(stream.ToArray());
                     }
                     #endregion
-                    return encodeBase64(compressedStream);
+                    exportedText = encodeBase64(compressedStream);
+                    return !string.IsNullOrWhiteSpace(exportedText);
                 }
             }
             catch (Exception ex)
             {
                 s_log.Error(ex, "Unexpected exception.");
-                return null;
+                exportedText = null;
+                return false;
             }
         }
+
     }
 }

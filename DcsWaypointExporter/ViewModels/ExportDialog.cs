@@ -5,6 +5,7 @@ using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using DcsWaypointExporter.Enums;
 using DcsWaypointExporter.Models;
 using DcsWaypointExporter.Services;
 
@@ -16,14 +17,43 @@ namespace DcsWaypointExporter.ViewModels
 
         public string ExportedText { get; }
         public PresetsLua.Mission Mission { get; }
-
-
-        public ExportDialog(PresetsLua.Mission mission)
+        public DcsMaps? Map
         {
+            get => _map;
+            set
+            {
+                if (SetProperty(ref _map, value))
+                {
+                    OnPropertyChanged(nameof(MapName));
+                }
+            }
+        }
+        private DcsMaps? _map = null;
+        public string MapName
+        {
+            get
+            {
+                if (Map is null)
+                {
+                    return string.Empty;
+                }
+
+                if (DcsMapsTools.TextDictionary.TryGetValue(Map.Value, out var text))
+                {
+                    return text;
+                }
+
+                return string.Empty;
+            }
+        }
+
+
+        public ExportDialog(DcsMaps map, PresetsLua.Mission mission)
+        {
+            Map = map;
             Mission = mission;
 
-            var exportedText = Ioc.Default.GetRequiredService<IMissionImportExport>().Export(mission);
-            if (exportedText is null)
+            if (!Ioc.Default.GetRequiredService<IMissionImportExport>().Export(map, mission, out var exportedText))
             {
                 ExportedText = string.Empty;
                 System.Windows.MessageBox.Show(CustomResources.Language.UnableToGenerateMissionExport, CustomResources.Language.Error, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
