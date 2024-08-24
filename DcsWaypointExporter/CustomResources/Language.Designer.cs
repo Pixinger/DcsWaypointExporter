@@ -463,6 +463,15 @@ namespace DcsWaypointExporter.CustomResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The map has unsaved modifications. Do you want to save them? ähnelt.
+        /// </summary>
+        public static string TheMapHasUnsavedModifications {
+            get {
+                return ResourceManager.GetString("TheMapHasUnsavedModifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To Clipboard ähnelt.
         /// </summary>
         public static string ToClipboard {

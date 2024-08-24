@@ -157,6 +157,13 @@ namespace DcsWaypointExporter.Services
                 }
 
                 s_log.Debug("appsettings.json specified a custom folder: {0}", cfgFolder);
+
+                if (!Directory.Exists(cfgFolder))
+                {
+                    s_log.Error("appsettings.json specified a non existent custom folder: {0}", cfgFolder);
+                    return null;
+                }
+
                 return cfgFolder;
             }
 
@@ -169,7 +176,7 @@ namespace DcsWaypointExporter.Services
 
             var subFolders = folderSavedGames.GetDirectories();
 
-            var candidates = subFolders.Where(x => x.Name.Contains(DCS, StringComparison.CurrentCultureIgnoreCase));
+            var candidates = subFolders.Where(x => x.Name.StartsWith(DCS, StringComparison.CurrentCultureIgnoreCase));
             if (candidates is null)
             {
                 s_log.Debug("No subfolders with '{0}' in it's name found.", DCS);
