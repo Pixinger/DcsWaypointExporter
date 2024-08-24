@@ -1,216 +1,5 @@
 presets = 
 {
-	["Test_Schnecke"] = 
-	{
-		[1] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 900,
-			["ETA_locked"] = true,
-			["y"] = 369401.84375,
-			["x"] = -328988.03125,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [1]
-		[2] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 2299.2966478355,
-			["ETA_locked"] = true,
-			["y"] = 386070.3125,
-			["x"] = -232465.9375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [2]
-		[3] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 3986.2533218003,
-			["ETA_locked"] = true,
-			["y"] = 502555.8125,
-			["x"] = -213083.984375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [3]
-		[4] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 5682.6706358294,
-			["ETA_locked"] = true,
-			["y"] = 526589.4375,
-			["x"] = -329375.6875,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [4]
-		[5] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 6478.3285672432,
-			["ETA_locked"] = true,
-			["y"] = 473095.25,
-			["x"] = -344881.25,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [5]
-		[6] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 8064.0119455143,
-			["ETA_locked"] = true,
-			["y"] = 441502.6875,
-			["x"] = -238474.34375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [6]
-		[7] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 8811.1143027379,
-			["ETA_locked"] = true,
-			["y"] = 491508.125,
-			["x"] = -223162.59375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [7]
-		[8] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 10241.53532111,
-			["ETA_locked"] = true,
-			["y"] = 515154.09375,
-			["x"] = -320459.96875,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [8]
-		[9] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 10738.055821944,
-			["ETA_locked"] = true,
-			["y"] = 482010.96875,
-			["x"] = -330926.25,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [9]
-		[10] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 12061.464888063,
-			["ETA_locked"] = true,
-			["y"] = 454876.21875,
-			["x"] = -242350.734375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [10]
-		[11] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 12465.802498246,
-			["ETA_locked"] = true,
-			["y"] = 482204.78125,
-			["x"] = -234985.59375,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [11]
-		[12] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 13625.841532383,
-			["ETA_locked"] = true,
-			["y"] = 505075.46875,
-			["x"] = -312901.03125,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [12]
-		[13] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 13875.007037519,
-			["ETA_locked"] = true,
-			["y"] = 488213.1875,
-			["x"] = -317358.875,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [13]
-		[14] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 14907.327804455,
-			["ETA_locked"] = true,
-			["y"] = 465536.3125,
-			["x"] = -248746.765625,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [14]
-		[15] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 15071.345450192,
-			["ETA_locked"] = true,
-			["y"] = 476196.375,
-			["x"] = -244482.75,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [15]
-		[16] = 
-		{
-			["alt"] = 2000,
-			["type"] = "Turning Point",
-			["ETA"] = 15982.334695769,
-			["ETA_locked"] = true,
-			["y"] = 494609.21875,
-			["x"] = -305535.875,
-			["name"] = "",
-			["action"] = "Turning Point",
-			["alt_type"] = "BARO",
-			["speed_locked"] = false,
-		}, -- end of [16]
-	}, -- end of ["Test_Schnecke"]
 	["MINI-MISSION-B-11"] = 
 	{
 		[1] = 
@@ -945,4 +734,215 @@ presets =
 			["ETA"] = 15317.608817508,
 		}, -- end of [28]
 	}, -- end of ["MINI-MISSION-B-8"]
+	["Test_Schnecke"] = 
+	{
+		[1] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 900,
+			["ETA_locked"] = true,
+			["y"] = 369401.84375,
+			["x"] = -328988.03125,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [1]
+		[2] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 2299.2966478355,
+			["ETA_locked"] = true,
+			["y"] = 386070.3125,
+			["x"] = -232465.9375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [2]
+		[3] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 3986.2533218003,
+			["ETA_locked"] = true,
+			["y"] = 502555.8125,
+			["x"] = -213083.984375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [3]
+		[4] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 5682.6706358294,
+			["ETA_locked"] = true,
+			["y"] = 526589.4375,
+			["x"] = -329375.6875,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [4]
+		[5] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 6478.3285672432,
+			["ETA_locked"] = true,
+			["y"] = 473095.25,
+			["x"] = -344881.25,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [5]
+		[6] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 8064.0119455143,
+			["ETA_locked"] = true,
+			["y"] = 441502.6875,
+			["x"] = -238474.34375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [6]
+		[7] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 8811.1143027379,
+			["ETA_locked"] = true,
+			["y"] = 491508.125,
+			["x"] = -223162.59375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [7]
+		[8] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 10241.53532111,
+			["ETA_locked"] = true,
+			["y"] = 515154.09375,
+			["x"] = -320459.96875,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [8]
+		[9] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 10738.055821944,
+			["ETA_locked"] = true,
+			["y"] = 482010.96875,
+			["x"] = -330926.25,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [9]
+		[10] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 12061.464888063,
+			["ETA_locked"] = true,
+			["y"] = 454876.21875,
+			["x"] = -242350.734375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [10]
+		[11] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 12465.802498246,
+			["ETA_locked"] = true,
+			["y"] = 482204.78125,
+			["x"] = -234985.59375,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [11]
+		[12] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 13625.841532383,
+			["ETA_locked"] = true,
+			["y"] = 505075.46875,
+			["x"] = -312901.03125,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [12]
+		[13] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 13875.007037519,
+			["ETA_locked"] = true,
+			["y"] = 488213.1875,
+			["x"] = -317358.875,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [13]
+		[14] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 14907.327804455,
+			["ETA_locked"] = true,
+			["y"] = 465536.3125,
+			["x"] = -248746.765625,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [14]
+		[15] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 15071.345450192,
+			["ETA_locked"] = true,
+			["y"] = 476196.375,
+			["x"] = -244482.75,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [15]
+		[16] = 
+		{
+			["alt"] = 2000,
+			["type"] = "Turning Point",
+			["ETA"] = 15982.334695769,
+			["ETA_locked"] = true,
+			["y"] = 494609.21875,
+			["x"] = -305535.875,
+			["name"] = "",
+			["action"] = "Turning Point",
+			["alt_type"] = "BARO",
+			["speed_locked"] = false,
+		}, -- end of [16]
+	}, -- end of ["Test_Schnecke"]
 } -- end of presets
